@@ -3,30 +3,1387 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario Embebido</title>
+    <title>Catálogo de Productos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #25D366;
+            --primary-dark: #128C7E;
+            --secondary: #FF6B6B;
+            --accent: #FFD166;
+            --dark: #333;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .admin-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .admin-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .product-image-container {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
             display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f9f9f9;
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 10px;
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+            height: 3rem;
+            overflow: hidden;
+        }
+        
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-sku {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .whatsapp-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .whatsapp-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        /* Landing Page */
+        .landing-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+        
+        .landing-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .landing-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        .landing-image-container {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .landing-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+        }
+        
+        .landing-details {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .landing-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .landing-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .landing-sku {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        .landing-description {
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+        
+        .features {
+            margin-bottom: 2rem;
+        }
+        
+        .features h3 {
+            margin-bottom: 1rem;
+        }
+        
+        .features ul {
+            list-style-type: none;
+        }
+        
+        .features li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .features li:before {
+            content: "✓";
+            color: var(--primary);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        /* Purchase Form */
+        .purchase-form {
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-title {
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .total-price {
+            background: var(--accent);
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1.5rem 0;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        
+        .submit-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        /* Admin Panel */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            background-color: #f7f7f7;
         }
-        iframe {
+        
+        .admin-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .pin-form {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .pin-input {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .pin-input input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 1.5rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .pin-input input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        .add-product-form {
+            display: none;
+        }
+        
+        .products-list {
+            margin-top: 2rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .product-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .product-item:last-child {
+            border-bottom: none;
+        }
+        
+        .product-item-info {
+            flex: 1;
+        }
+        
+        .product-item-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .product-item-sku {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .product-item-price {
+            margin: 0.5rem 0;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        
+        .edit-price-form {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .edit-price-input {
+            width: 120px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        
+        .edit-price-btn {
+            background: var(--primary);
+            color: white;
             border: none;
-            width: 640px;
-            height: 800px;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .admin-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .edit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .delete-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            background-color: var(--dark);
+            color: white;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .landing-content {
+                flex-direction: column;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .admin-btn {
+                position: static;
+                margin-top: 1rem;
+            }
+            
+            .product-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .admin-buttons {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .landing-page {
+                padding: 1rem;
+            }
+            
+            .pin-input input {
+                width: 40px;
+                height: 40px;
+            }
         }
     </style>
 </head>
 <body>
-    <iframe 
-        src="https://docs.google.com/forms/d/e/1FAIpQLSfIV5qGfELYyMBUfg1sBu1ugy_LjABKuusxZxfswxzq8GJs9g/viewform?embedded=true" 
-        frameborder="0">
-        Cargando…
-    </iframe>
+    <header>
+        <h1>Catálogo de Productos</h1>
+        <p class="subtitle">Consulta por cualquiera de nuestros productos por WhatsApp</p>
+        <button class="admin-btn" id="admin-btn">
+            <i class="fas fa-cog"></i> Administrar
+        </button>
+    </header>
+    
+    <div class="container">
+        <div class="products-grid" id="products-container">
+            <!-- Los productos se cargarán aquí con JavaScript -->
+        </div>
+    </div>
+    
+    <!-- Landing Page Template -->
+    <div class="landing-page" id="landing-page">
+        <div class="landing-header">
+            <h2 id="landing-product-title">Nombre del Producto</h2>
+            <button class="close-btn" id="close-landing">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="landing-content">
+            <div class="landing-image-container">
+                <img id="landing-product-image" src="" alt="Producto" class="landing-image">
+            </div>
+            
+            <div class="landing-details">
+                <h3 class="landing-title" id="landing-product-name">Nombre del Producto</h3>
+                <p class="landing-price" id="landing-product-price">Gs. 0</p>
+                <p class="landing-sku" id="landing-product-sku">SKU: XXX-XXX</p>
+                
+                <div class="landing-description" id="landing-product-description">
+                    <!-- La descripción se cargará aquí -->
+                </div>
+                
+                <div class="features">
+                    <h3>Características principales:</h3>
+                    <ul id="landing-product-features">
+                        <!-- Las características se cargarán aquí -->
+                    </ul>
+                </div>
+                
+                <div class="purchase-form">
+                    <h3 class="form-title">Completa el formulario para comprar</h3>
+                    <form id="purchase-form">
+                        <div class="form-group">
+                            <label for="customer-name">Nombre completo</label>
+                            <input type="text" id="customer-name" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="customer-phone">Teléfono</label>
+                            <input type="tel" id="customer-phone" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="customer-quantity">Cantidad</label>
+                            <select id="customer-quantity" class="form-control" required>
+                                <option value="">Selecciona la cantidad</option>
+                                <option value="1">1 unidad</option>
+                                <option value="2">2 unidades</option>
+                                <option value="3">3 unidades</option>
+                                <option value="4">4 unidades</option>
+                                <option value="5">5 unidades</option>
+                                <option value="6">6 unidades</option>
+                                <option value="7">7 unidades</option>
+                                <option value="8">8 unidades</option>
+                                <option value="9">9 unidades</option>
+                                <option value="10">10 unidades</option>
+                                <option value="mas">Más de 10 unidades</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="customer-address">Dirección de envío</label>
+                                <input type="text" id="customer-address" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="customer-city">Ciudad</label>
+                                <input type="text" id="customer-city" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="customer-message">Mensaje adicional (opcional)</label>
+                            <textarea id="customer-message" class="form-control" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="total-price" id="total-price">
+                            Total a pagar: Gs. 0
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <i class="fab fa-whatsapp"></i>
+                            Enviar pedido por WhatsApp
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="admin-panel">
+        <div class="admin-content">
+            <div class="admin-header">
+                <h2>Panel de Administración</h2>
+                <button class="close-btn" id="close-admin">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="pin-form" id="pin-form">
+                <h3>Ingresa el PIN de acceso</h3>
+                <div class="pin-input">
+                    <input type="password" maxlength="1" id="pin1" class="pin-digit">
+                    <input type="password" maxlength="1" id="pin2" class="pin-digit">
+                    <input type="password" maxlength="1" id="pin3" class="pin-digit">
+                    <input type="password" maxlength="1" id="pin4" class="pin-digit">
+                </div>
+                <button class="submit-btn" id="verify-pin">Verificar PIN</button>
+                <p id="pin-error" style="color: red; margin-top: 1rem; display: none;">PIN incorrecto. Intenta nuevamente.</p>
+            </div>
+            
+            <div class="add-product-form" id="add-product-form">
+                <h3>Agregar Nuevo Producto</h3>
+                <form id="new-product-form">
+                    <div class="form-group">
+                        <label for="new-product-title">Nombre del Producto</label>
+                        <input type="text" id="new-product-title" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="new-product-sku">SKU</label>
+                        <input type="text" id="new-product-sku" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="new-product-price">Precio (Guaraníes)</label>
+                        <input type="number" id="new-product-price" class="form-control" min="0" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="new-product-image">URL de la Imagen</label>
+                        <input type="url" id="new-product-image" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="new-product-description">Descripción del Producto</label>
+                        <textarea id="new-product-description" class="form-control" rows="4" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="new-product-features">Características (separadas por comas)</label>
+                        <input type="text" id="new-product-features" class="form-control" placeholder="Ej: Alta calidad, Duradero, Portátil" required>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-plus"></i>
+                        Agregar Producto
+                    </button>
+                </form>
+                
+                <div class="products-list">
+                    <h3>Productos Actuales</h3>
+                    <div id="admin-products-list">
+                        <!-- Lista de productos en administración -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Catálogo de Productos. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Datos de los productos - PRECIOS EN GUARANÍES
+        let products = [
+            {
+                title: "MINI ASPIRADORA",
+                sku: "ASP-001",
+                price: 250000,
+                image_url: "https://cdn.shopify.com/s/files/1/0885/3012/5095/files/ChatGPT_Image_9_ago_2025_09_49_46_p.m._ee0d4101-4eb8-45cf-9b23-e5e1d8c6288c.png?v=1755580613",
+                description: "Mini aspiradora portátil y potente, ideal para limpiar espacios pequeños, el auto o lugares de difícil acceso. Con batería recargable y múltiples accesorios.",
+                features: ["Portátil y ligera", "Batería recargable", "Múltiples accesorios", "Fácil de usar"]
+            },
+            {
+                title: "V-SHAPED - CINTA FACIAL",
+                sku: "V-S-002",
+                price: 120000,
+                image_url: "https://cdn.shopify.com/s/files/1/0885/3012/5095/files/17420819091000332081.jpg?v=1758002125",
+                description: "Cinta facial V-Shaped para lifting facial instantáneo. Ayuda a reducir la apariencia de arrugas y define el contorno facial.",
+                features: ["Lifting instantáneo", "Reduce arrugas", "Define contorno facial", "Fácil aplicación"]
+            },
+            {
+                title: "NIVELADORAS X 4",
+                sku: "NIVE-003",
+                price: 180000,
+                image_url: "https://cdn.shopify.com/s/files/1/0885/3012/5095/files/D_NQ_NP_928396-MLA76742057946_062024-O_184afc35-97d9-4de7-a312-68808e057481.webp?v=1757838613",
+                description: "Set de 4 niveladoras profesionales para trabajos de construcción y bricolaje. Precisión garantizada y fácil de usar.",
+                features: ["Set de 4 unidades", "Precisión profesional", "Duraderas", "Para múltiples usos"]
+            },
+            {
+                title: "PLANTILLA ORTOPÉDICA | ORTOFLEX 5D®",
+                sku: "ORTOPIEX-004",
+                price: 350000,
+                image_url: "https://cdn.shopify.com/s/files/1/0885/3012/5095/files/ChatGPT_Image_8_jun_2025_01_04_14_a.m._7b2cf86c-8fe2-44ec-a98a-2f3be15ebfe9.png?v=1757832927",
+                description: "Plantillas ortopédicas Ortoflex 5D con tecnología de amortiguación avanzada. Alivian el dolor de pies y espalda, mejorando la postura.",
+                features: ["Tecnología 5D", "Amortiguación avanzada", "Alivia dolores", "Mejora postura"]
+            },
+            {
+                title: "MINI CAMARA SPY",
+                sku: "SPY-005",
+                price: 420000,
+                image_url: "https://cdn.shopify.com/s/files/1/0885/3012/5095/files/Captura_de_pantalla_2025-07-21_013411.png?v=1757887583",
+                description: "Mini cámara espía de alta definición, discreta y fácil de ocultar. Ideal para seguridad doméstica o vigilancia.",
+                features: ["Alta definición", "Discreta", "Fácil de ocultar", "Batería de larga duración"]
+            },
+            {
+                title: "LINTERNA POTENTE CON ZOOM",
+                sku: "LINT-006",
+                price: 150000,
+                image_url: "https://acdn-us.mitiendanube.com/stores/001/131/056/products/linterr1-883f44649ed5698ece16878282190084-640-0.jpg",
+                description: "Linterna potente con zoom ajustable, ideal para camping, emergencias o trabajos de precisión. Alcance de hasta 500 metros.",
+                features: ["Zoom ajustable", "Alcance 500m", "Resistente al agua", "Batería recargable"]
+            },
+            {
+                title: "COMBO DE PERFUMES / ONE MILLION / 212",
+                sku: "PEFUM-007",
+                price: 380000,
+                image_url: "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/WhatsApp_Image_2025-05-12_at_19.24.47.jpg?v=1758052245",
+                description: "Combo exclusivo de perfumes One Million y 212. Fragancias duraderas y elegantes para ocasiones especiales.",
+                features: ["Fragancias exclusivas", "Duraderas", "Elegantes", "Combo especial"]
+            },
+            {
+                title: "SOPORTE REGULABLE PARA ELECTRODOMESTICOS",
+                sku: "SOP-008",
+                price: 280000,
+                image_url: "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Captura_de_pantalla_2025-08-31_013252.png?v=1756670358",
+                description: "Soporte regulable para electrodomésticos, ideal para microondas, air fryers y otros dispositivos de cocina. Ahorra espacio y organiza tu cocina.",
+                features: ["Regulable", "Ahorra espacio", "Fácil instalación", "Material resistente"]
+            },
+            {
+                title: "PISTOLA MASAJEADORA",
+                sku: "PIS-010",
+                price: 750000,
+                image_url: "https://http2.mlstatic.com/D_NQ_NP_863788-MLA78270636317_082024-O.webp",
+                description: "Pistola masajeadora profesional para aliviar tensiones musculares. Múltiples cabezales y velocidades para un masaje personalizado.",
+                features: ["Profesional", "Múltiples cabezales", "Velocidades ajustables", "Alivia tensiones"]
+            },
+            {
+                title: "CORRECTOR DE POSTURA X",
+                sku: "CORREC-011",
+                price: 220000,
+                image_url: "https://www.skylinestoree.online/cdn/shop/files/fajacorrectora3_540x_d6e03ef1-f416-4751-aba8-e8d3bd49dd95.jpg?v=1752811848&width=600",
+                description: "Corrector de postura ergonómico que ayuda a mantener una postura correcta durante el día. Ideal para personas que trabajan sentadas.",
+                features: ["Ergonómico", "Ajustable", "Material transpirable", "Mejora postura"]
+            },
+            {
+                title: "💙🦶 Pack Bienestar: 2 Pares de Medias Terapéuticas",
+                sku: "MEDIA-012",
+                price: 150000,
+                image_url: "https://jv7dta-ka.myshopify.com/cdn/shop/files/ChatGPTImage19ago2025_01_50_42a.m..png?v=1755579070&width=600",
+                description: "Pack de 2 pares de medias terapéuticas que mejoran la circulación y reducen la fatiga en los pies. Ideales para uso diario.",
+                features: ["Mejora circulación", "Reduce fatiga", "Pack de 2 pares", "Material transpirable"]
+            },
+            {
+                title: "COMBO DIOSA",
+                sku: "COMBO-DIOSA-013",
+                price: 550000,
+                image_url: "https://jv7dta-ka.myshopify.com/cdn/shop/files/Captura_de_pantalla_2025-07-22_020430_abbf3cfe-023e-4117-b3c6-284092688429.png?v=1753160734&width=493",
+                description: "Combo Diosa con productos de belleza y cuidado personal seleccionados para realzar tu belleza natural.",
+                features: ["Productos seleccionados", "Cuidado personal", "Realza belleza", "Combo exclusivo"]
+            },
+            {
+                title: "Mini GPS con imán y batería ✨ Geo Ultra",
+                sku: "GPS-014",
+                price: 680000,
+                image_url: "https://jv7dta-ka.myshopify.com/cdn/shop/files/S86697bbae4184a99a675f0ad713badd8d.webp?v=1750465534&width=600",
+                description: "Mini GPS con imán incorporado y batería de larga duración. Ideal para localizar objetos importantes o mascotas.",
+                features: ["Con imán", "Batería larga duración", "Aplicación móvil", "Localización en tiempo real"]
+            },
+            {
+                title: "KIT PERFUMES: ONE MILLON, BLUE, SAUVAGE",
+                sku: "SAUVAGE-015",
+                price: 450000,
+                image_url: "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Captura_de_pantalla_2025-09-19_145822.jpg?v=1758304744",
+                description: "Kit de perfumes con las fragancias One Million, Blue y Sauvage. Tres opciones para diferentes ocasiones y estilos.",
+                features: ["Tres fragancias", "Para diferentes ocasiones", "Elegantes", "Duraderas"]
+            },
+            {
+                title: "Corte Fino/ Afilador de Cuchillos y Tijeras🔪✂️",
+                sku: "AFI-016",
+                price: 180000,
+                image_url: "https://jv7dta-ka.myshopify.com/cdn/shop/files/afilador1.webp?v=1753405987&width=600",
+                description: "Afilador profesional para cuchillos y tijeras. Mantén tus herramientas de corte siempre afiladas y listas para usar.",
+                features: ["Para cuchillos y tijeras", "Fácil de usar", "Resultados profesionales", "Seguro"]
+            },
+            {
+                title: "COMBO PERFUMES X2 BAD BOY + INVICTUS",
+                sku: "BADBOY-017",
+                price: 420000,
+                image_url: "https://jv7dta-ka.myshopify.com/cdn/shop/files/Post_para_instagram_datos_de_pago_moderno_azul_2.png?v=1753396867&width=600",
+                description: "Combo de perfumes Bad Boy e Invictus. Fragancias masculinas intensas y seductoras para el hombre moderno.",
+                features: ["Fragancias masculinas", "Intensas", "Seductoras", "Combo especial"]
+            },
+            {
+                title: "CREMA PARA HONGO",
+                sku: "HONGO-018",
+                price: 140000,
+                image_url: "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/WhatsApp_Image_2025-06-30_at_02.07.48.jpg?v=1758810936",
+                description: "Crema antifúngica efectiva para el tratamiento de hongos en la piel. Fórmula clínicamente probada para resultados rápidos.",
+                features: ["Antifúngica", "Resultados rápidos", "Fórmula probada", "Fácil aplicación"]
+            },
+            {
+                title: "PLANTILLA NAFOING",
+                sku: "NAF-019",
+                price: 300000,
+                image_url: "https://digital-world.in.ua/wa-data/public/shop/products/73/21/2173/images/9980/9980.970.jpg",
+                description: "Plantillas NAFOING con tecnología de amortiguación y soporte arqueado. Ideales para el confort diario y la salud de tus pies.",
+                features: ["Amortiguación avanzada", "Soporte arqueado", "Confort diario", "Material de calidad"]
+            },
+            {
+                title: "HIDROLAVADORA PORTATIL",
+                sku: "HIDRO-020",
+                price: 580000,
+                image_url: "https://m.media-amazon.com/images/I/71blwxAYH-L.jpg",
+                description: "Hidrolavadora portátil con potencia profesional. Ideal para limpiar autos, bicicletas, muebles y más. Fácil de transportar y usar.",
+                features: ["Portátil", "Potencia profesional", "Fácil de usar", "Múltiples usos"]
+            },
+            {
+                title: "LUCES NAVIDEÑAS COLORIDAS CON PANEL SOLAR 10 METROS",
+                sku: "LUCNAVI-021",
+                price: 240000,
+                image_url: "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Imagen_de_WhatsApp_2025-09-25_a_las_01.03.55_e8205f5b.jpg?v=1759102624",
+                description: "Luces navideñas coloridas de 10 metros con panel solar. Decoración ecológica y económica para tus fiestas.",
+                features: ["Panel solar", "10 metros de longitud", "Colores vibrantes", "Ecológico"]
+            },
+            {
+                title: "PARLANTE TIPO JBL G4",
+                sku: "JBL-022",
+                price: 620000,
+                image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSs0vkbIqtSK_Qufj8C9Y2Lf3Y0kUlelJTQJg&s",
+                description: "Parlante Bluetooth tipo JBL G4 con sonido de alta calidad y batería de larga duración. Ideal para fiestas y reuniones.",
+                features: ["Sonido de alta calidad", "Batería larga duración", "Bluetooth", "Diseño portátil"]
+            },
+            {
+                title: "SUPER COMBO 3x1 de Perfumes para Mujeres 30ML🌸",
+                sku: "PER30ML-023",
+                price: 480000,
+                image_url: "https://jv7dta-ka.myshopify.com/cdn/shop/files/ChatGPT_Image_15_jul_2025_03_10_36_p.m..png?v=1752603067&width=713",
+                description: "Super combo 3x1 de perfumes para mujeres en presentación de 30ml. Tres fragancias elegantes y femeninas en un solo pack.",
+                features: ["Tres fragancias", "Presentación 30ml", "Elegantes", "Femeninas"]
+            },
+            {
+                title: "RoyalBee Wax CERA PARA MADERA Y CUERO✨",
+                sku: "BEEWAS-024",
+                price: 160000,
+                image_url: "https://jv7dta-ka.myshopify.com/cdn/shop/files/ChatGPT_Image_4_oct_2025_03_57_23_p.m..png?v=1759604271&width=600",
+                description: "Cera RoyalBee para el cuidado y protección de madera y cuero. Restaura el brillo natural y protege contra el desgaste.",
+                features: ["Para madera y cuero", "Restaura brillo", "Protege del desgaste", "Fácil aplicación"]
+            },
+            {
+                title: "Lampara Solar + kit De Herramienta",
+                sku: "LINKINT-025",
+                price: 350000,
+                image_url: "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Imagen_de_WhatsApp_2025-10-11_a_las_23.38.41_6c489671.jpg?v=1760236797",
+                description: "Lámpara solar con kit de herramientas incluido. Iluminación ecológica y herramientas básicas para el hogar.",
+                features: ["Energía solar", "Kit de herramientas", "Ecológica", "Práctica"]
+            },
+            {
+                title: "SOMBRILLA PARA AUTOMÓVILES",
+                sku: "SOMBRI-026",
+                price: 200000,
+                image_url: "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Captura_de_pantalla_2025-10-13_100601.jpg?v=1760360812",
+                description: "Sombrilla para automóviles que protege el interior del calor solar. Mantiene tu auto fresco y previene el desgaste de los interiores.",
+                features: ["Protección solar", "Mantiene fresco", "Fácil de instalar", "Tamaño universal"]
+            },
+            {
+                title: "IRRIGADOR BUCAL",
+                sku: "IRRI-027",
+                price: 320000,
+                image_url: "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Captura_de_pantalla_2025-10-13_100619.jpg?v=1760360812",
+                description: "Irrigador bucal para una limpieza dental profunda. Elimina restos de comida y placa bacteriana de lugares difíciles de alcanzar.",
+                features: ["Limpieza profunda", "Múltiples boquillas", "Presión ajustable", "Fácil de usar"]
+            },
+            {
+                title: "Clip Nasal Anti-Ronquidos😴",
+                sku: "CLIPNASAL-029",
+                price: 100000,
+                image_url: "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Captura_de_pantalla_2025-10-16_085649.jpg?v=1760615829",
+                description: "Clip nasal anti-ronquidos que mejora la respiración durante el sueño. Solución cómoda y efectiva para ronquidos leves.",
+                features: ["Anti-ronquidos", "Mejora respiración", "Cómodo", "Efectivo"]
+            },
+            {
+                title: "ASIPIRADORA INTELIGENTE",
+                sku: "ASPIRADORAINTE-29",
+                price: 1100000,
+                image_url: "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Imagen_de_WhatsApp_2025-10-16_a_las_11.11.48_140b0bd7.jpg?v=1760623973",
+                description: "Aspiradora inteligente con navegación automática y aplicación móvil. Limpia tu hogar de forma autónoma y eficiente.",
+                features: ["Navegación automática", "App móvil", "Limpieza eficiente", "Programable"]
+            },
+            {
+                title: "SECADOR DE ROPA PORTATIL",
+                sku: "SECAPORT-030",
+                price: 460000,
+                image_url: "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Captura_de_pantalla_2025-10-16_112112.jpg?v=1760624483",
+                description: "Secador de ropa portátil, ideal para viajes o espacios pequeños. Secado rápido y eficiente sin ocupar mucho espacio.",
+                features: ["Portátil", "Secado rápido", "Compacto", "Eficiente"]
+            },
+            {
+                title: "Ducha Portátil Recargable Premium™",
+                sku: "Portátil-ducha-001",
+                price: 400000,
+                image_url: "https://cdn.shopify.com/s/files/1/0885/3012/5095/files/Imagen_de_WhatsApp_2025-10-17_a_las_17.51.23_4c050991.jpg?v=1760734483",
+                description: "Ducha portátil recargable premium para camping, playa o emergencias. Presión constante y fácil de transportar.",
+                features: ["Recargable", "Presión constante", "Portátil", "Premium"]
+            },
+            {
+                title: "Luz Navideña con Panel Solar",
+                sku: "luzsolar-002",
+                price: 220000,
+                image_url: "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Imagen_de_WhatsApp_2025-09-25_a_las_01.03.55_e8205f5b.jpg?v=1759102624",
+                description: "Luces navideñas con panel solar para decoración ecológica. Automáticas y con múltiples modos de iluminación.",
+                features: ["Panel solar", "Automáticas", "Múltiples modos", "Ecológicas"]
+            }
+        ];
+
+        // Número de WhatsApp (reemplaza con tu número)
+        const whatsappNumber = "1234567890"; // Cambia por tu número real
+        
+        // PIN de administración
+        const ADMIN_PIN = "9662";
+        
+        // Variables globales
+        let currentProduct = null;
+        let editingPriceIndex = -1;
+        
+        // Función para formatear números con separadores de miles
+        function formatPrice(price) {
+            return new Intl.NumberFormat('es-PY').format(price);
+        }
+        
+        // Función para generar el catálogo
+        function generateCatalog() {
+            const container = document.getElementById('products-container');
+            container.innerHTML = '';
+            
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                
+                // Imagen por defecto si no hay URL
+                const imageUrl = product.image_url || 'https://via.placeholder.com/300x200?text=Imagen+No+Disponible';
+                
+                productCard.innerHTML = `
+                    <div class="product-image-container">
+                        <img src="${imageUrl}" alt="${product.title}" class="product-image" onerror="this.src='https://via.placeholder.com/300x200?text=Error+al+cargar+imagen'">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.title}</h3>
+                        <p class="product-price">Gs. ${formatPrice(product.price)}</p>
+                        <p class="product-sku">SKU: ${product.sku}</p>
+                        <button class="whatsapp-btn" data-product='${JSON.stringify(product).replace(/'/g, "&#39;")}'>
+                            <i class="fab fa-whatsapp"></i>
+                            Consultar por WhatsApp
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(productCard);
+            });
+            
+            // Agregar event listeners a los botones
+            document.querySelectorAll('.whatsapp-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productData = JSON.parse(this.getAttribute('data-product'));
+                    openLandingPage(productData);
+                });
+            });
+        }
+        
+        // Función para abrir la landing page del producto
+        function openLandingPage(product) {
+            currentProduct = product;
+            
+            // Actualizar contenido de la landing page
+            document.getElementById('landing-product-title').textContent = product.title;
+            document.getElementById('landing-product-name').textContent = product.title;
+            document.getElementById('landing-product-price').textContent = `Gs. ${formatPrice(product.price)}`;
+            document.getElementById('landing-product-sku').textContent = `SKU: ${product.sku}`;
+            
+            const imageUrl = product.image_url || 'https://via.placeholder.com/500x400?text=Imagen+No+Disponible';
+            document.getElementById('landing-product-image').src = imageUrl;
+            document.getElementById('landing-product-image').alt = product.title;
+            
+            // Actualizar descripción
+            const descriptionElement = document.getElementById('landing-product-description');
+            descriptionElement.innerHTML = `<p>${product.description || 'Este es un producto de alta calidad que te ayudará a mejorar tu día a día. Fabricado con materiales premium y diseñado para ofrecerte la mejor experiencia de uso.'}</p>`;
+            
+            // Actualizar características
+            const featuresElement = document.getElementById('landing-product-features');
+            featuresElement.innerHTML = '';
+            
+            if (product.features && product.features.length > 0) {
+                product.features.forEach(feature => {
+                    const li = document.createElement('li');
+                    li.textContent = feature;
+                    featuresElement.appendChild(li);
+                });
+            } else {
+                // Características por defecto si no hay específicas
+                const defaultFeatures = [
+                    "Alta durabilidad y resistencia",
+                    "Diseño ergonómico y moderno",
+                    "Fácil de usar y mantener",
+                    "Garantía incluida"
+                ];
+                
+                defaultFeatures.forEach(feature => {
+                    const li = document.createElement('li');
+                    li.textContent = feature;
+                    featuresElement.appendChild(li);
+                });
+            }
+            
+            // Actualizar total
+            updateTotalPrice();
+            
+            // Mostrar la landing page
+            document.getElementById('landing-page').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Función para actualizar el precio total
+        function updateTotalPrice() {
+            const quantitySelect = document.getElementById('customer-quantity');
+            const totalElement = document.getElementById('total-price');
+            
+            const quantity = quantitySelect.value;
+            let total = 0;
+            
+            if (quantity === 'mas') {
+                totalElement.textContent = 'Total a pagar: Consultar por más de 10 unidades';
+                return;
+            }
+            
+            if (quantity && currentProduct) {
+                total = currentProduct.price * parseInt(quantity);
+                totalElement.textContent = `Total a pagar: Gs. ${formatPrice(total)}`;
+            } else {
+                totalElement.textContent = 'Total a pagar: Gs. 0';
+            }
+        }
+        
+        // Función para cerrar la landing page
+        function closeLandingPage() {
+            document.getElementById('landing-page').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.getElementById('purchase-form').reset();
+            document.getElementById('total-price').textContent = 'Total a pagar: Gs. 0';
+        }
+        
+        // Función para enviar el formulario por WhatsApp
+        function submitForm(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('customer-name').value;
+            const phone = document.getElementById('customer-phone').value;
+            const quantity = document.getElementById('customer-quantity').value;
+            const address = document.getElementById('customer-address').value;
+            const city = document.getElementById('customer-city').value;
+            const message = document.getElementById('customer-message').value;
+            
+            let total = 0;
+            let quantityText = quantity;
+            
+            if (quantity !== 'mas') {
+                total = currentProduct.price * parseInt(quantity);
+                quantityText = `${quantity} unidad(es)`;
+            }
+            
+            // Crear mensaje para WhatsApp
+            const whatsappMessage = `Hola, estoy interesado en comprar el siguiente producto:
+
+*Producto:* ${currentProduct.title}
+*SKU:* ${currentProduct.sku}
+*Precio unitario:* Gs. ${formatPrice(currentProduct.price)}
+*Cantidad:* ${quantityText}
+${quantity !== 'mas' ? `*Total a pagar:* Gs. ${formatPrice(total)}` : ''}
+
+*Mis datos:*
+- *Nombre:* ${name}
+- *Teléfono:* ${phone}
+- *Dirección:* ${address}
+- *Ciudad:* ${city}
+${message ? `- *Mensaje adicional:* ${message}` : ''}
+
+Por favor, contáctenme para proceder con la compra. ¡Gracias!`;
+            
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            
+            // Abrir WhatsApp
+            window.open(whatsappLink, '_blank');
+            
+            // Cerrar landing page después de enviar
+            setTimeout(() => {
+                closeLandingPage();
+                alert('¡Gracias por tu pedido! Te contactaremos pronto por WhatsApp.');
+            }, 1000);
+        }
+        
+        // Función para abrir el panel de administración
+        function openAdminPanel() {
+            document.getElementById('admin-panel').style.display = 'flex';
+            document.getElementById('pin-form').style.display = 'block';
+            document.getElementById('add-product-form').style.display = 'none';
+            document.getElementById('pin-error').style.display = 'none';
+            
+            // Limpiar campos PIN
+            document.querySelectorAll('.pin-digit').forEach(input => {
+                input.value = '';
+            });
+            document.getElementById('pin1').focus();
+        }
+        
+        // Función para cerrar el panel de administración
+        function closeAdminPanel() {
+            document.getElementById('admin-panel').style.display = 'none';
+            document.getElementById('new-product-form').reset();
+            editingPriceIndex = -1;
+        }
+        
+        // Función para verificar el PIN
+        function verifyPin() {
+            const pin1 = document.getElementById('pin1').value;
+            const pin2 = document.getElementById('pin2').value;
+            const pin3 = document.getElementById('pin3').value;
+            const pin4 = document.getElementById('pin4').value;
+            
+            const enteredPin = pin1 + pin2 + pin3 + pin4;
+            
+            if (enteredPin === ADMIN_PIN) {
+                document.getElementById('pin-form').style.display = 'none';
+                document.getElementById('add-product-form').style.display = 'block';
+                updateAdminProductsList();
+            } else {
+                document.getElementById('pin-error').style.display = 'block';
+                document.querySelectorAll('.pin-digit').forEach(input => {
+                    input.value = '';
+                });
+                document.getElementById('pin1').focus();
+            }
+        }
+        
+        // Función para agregar un nuevo producto
+        function addNewProduct(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('new-product-title').value;
+            const sku = document.getElementById('new-product-sku').value;
+            const price = parseInt(document.getElementById('new-product-price').value);
+            const image_url = document.getElementById('new-product-image').value;
+            const description = document.getElementById('new-product-description').value;
+            const features = document.getElementById('new-product-features').value.split(',').map(f => f.trim());
+            
+            // Verificar si el SKU ya existe
+            if (products.some(product => product.sku === sku)) {
+                alert('Ya existe un producto con ese SKU. Usa un SKU único.');
+                return;
+            }
+            
+            // Agregar el nuevo producto
+            products.push({
+                title,
+                sku,
+                price,
+                image_url,
+                description,
+                features
+            });
+            
+            // Actualizar la lista de productos en administración
+            updateAdminProductsList();
+            
+            // Regenerar el catálogo
+            generateCatalog();
+            
+            // Limpiar el formulario
+            document.getElementById('new-product-form').reset();
+            
+            alert('Producto agregado correctamente');
+        }
+        
+        // Función para actualizar la lista de productos en el panel de administración
+        function updateAdminProductsList() {
+            const container = document.getElementById('admin-products-list');
+            container.innerHTML = '';
+            
+            products.forEach((product, index) => {
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                
+                const isEditing = editingPriceIndex === index;
+                
+                productItem.innerHTML = `
+                    <div class="product-item-info">
+                        <div class="product-item-title">${product.title}</div>
+                        <div class="product-item-sku">SKU: ${product.sku}</div>
+                        <div class="product-item-price">
+                            ${isEditing ? 
+                                `<div class="edit-price-form">
+                                    <input type="number" class="edit-price-input" value="${product.price}" min="0" id="edit-price-${index}">
+                                    <button class="edit-price-btn" onclick="savePrice(${index})">Guardar</button>
+                                    <button class="edit-price-btn" style="background: var(--gray)" onclick="cancelEditPrice()">Cancelar</button>
+                                </div>` : 
+                                `Precio: Gs. ${formatPrice(product.price)}`}
+                        </div>
+                    </div>
+                    <div class="admin-buttons">
+                        ${!isEditing ? `<button class="edit-btn" onclick="editPrice(${index})">
+                            <i class="fas fa-edit"></i> Editar Precio
+                        </button>` : ''}
+                        <button class="delete-btn" onclick="deleteProduct(${index})">
+                            <i class="fas fa-trash"></i> Eliminar
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(productItem);
+            });
+        }
+        
+        // Función para editar el precio de un producto
+        function editPrice(index) {
+            editingPriceIndex = index;
+            updateAdminProductsList();
+        }
+        
+        // Función para guardar el precio editado
+        function savePrice(index) {
+            const newPrice = parseInt(document.getElementById(`edit-price-${index}`).value);
+            
+            if (isNaN(newPrice) || newPrice < 0) {
+                alert('Por favor ingresa un precio válido');
+                return;
+            }
+            
+            products[index].price = newPrice;
+            editingPriceIndex = -1;
+            updateAdminProductsList();
+            generateCatalog();
+            alert('Precio actualizado correctamente');
+        }
+        
+        // Función para cancelar la edición de precio
+        function cancelEditPrice() {
+            editingPriceIndex = -1;
+            updateAdminProductsList();
+        }
+        
+        // Función para eliminar un producto
+        function deleteProduct(index) {
+            if (confirm(`¿Estás seguro de que quieres eliminar "${products[index].title}"?`)) {
+                products.splice(index, 1);
+                editingPriceIndex = -1;
+                updateAdminProductsList();
+                generateCatalog();
+            }
+        }
+        
+        // Función para manejar la entrada del PIN
+        function handlePinInput() {
+            const inputs = document.querySelectorAll('.pin-digit');
+            
+            inputs.forEach((input, index) => {
+                input.addEventListener('input', function() {
+                    if (this.value.length === 1 && index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                });
+                
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' && this.value.length === 0 && index > 0) {
+                        inputs[index - 1].focus();
+                    }
+                });
+            });
+        }
+        
+        // Inicializar el catálogo cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            generateCatalog();
+            
+            // Event listeners para cerrar la landing page
+            document.getElementById('close-landing').addEventListener('click', closeLandingPage);
+            
+            // Event listener para el formulario
+            document.getElementById('purchase-form').addEventListener('submit', submitForm);
+            
+            // Event listener para actualizar el total cuando cambia la cantidad
+            document.getElementById('customer-quantity').addEventListener('change', updateTotalPrice);
+            
+            // Cerrar landing page al hacer clic fuera del contenido
+            document.getElementById('landing-page').addEventListener('click', function(event) {
+                if (event.target === this) {
+                    closeLandingPage();
+                }
+            });
+            
+            // Event listeners para el panel de administración
+            document.getElementById('admin-btn').addEventListener('click', openAdminPanel);
+            document.getElementById('close-admin').addEventListener('click', closeAdminPanel);
+            document.getElementById('verify-pin').addEventListener('click', verifyPin);
+            document.getElementById('new-product-form').addEventListener('submit', addNewProduct);
+            
+            // Configurar la entrada del PIN
+            handlePinInput();
+            
+            // Cerrar panel de administración al hacer clic fuera
+            document.getElementById('admin-panel').addEventListener('click', function(event) {
+                if (event.target === this) {
+                    closeAdminPanel();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
