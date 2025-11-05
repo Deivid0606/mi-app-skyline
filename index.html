@@ -544,232 +544,6 @@
             color: var(--gray);
         }
         
-        /* Admin Panel mejorado */
-        .admin-panel{ 
-            display:none; 
-            position:fixed; 
-            top:0; 
-            left:0; 
-            width:100%; 
-            height:100%; 
-            background:rgba(0,0,0,.8); 
-            z-index:2000; 
-            justify-content:center; 
-            align-items:center; 
-        }
-        .admin-content{ 
-            background:#fff; 
-            padding:2rem; 
-            border-radius:16px; 
-            width:90%; 
-            max-width:900px; 
-            max-height:90vh; 
-            overflow-y:auto; 
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        .admin-header{ 
-            display:flex; 
-            justify-content:space-between; 
-            align-items:center; 
-            margin-bottom:1.5rem; 
-            padding-bottom:1rem; 
-            border-bottom:1px solid #eee; 
-        }
-        .pin-form{ 
-            margin-bottom:2rem; 
-            padding:1.5rem; 
-            background:#f8f9fa; 
-            border-radius:8px; 
-        }
-        .pin-input{ 
-            display:flex; 
-            gap:.5rem; 
-            margin-bottom:1rem; 
-            justify-content: center;
-        }
-        .pin-input input{ 
-            width:50px; 
-            height:50px; 
-            text-align:center; 
-            font-size:1.5rem; 
-            border:2px solid #ddd; 
-            border-radius:5px; 
-            transition: var(--transition);
-        }
-        .pin-input input:focus{ 
-            border-color:var(--primary); 
-            outline:none; 
-            box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.2);
-        }
-        .add-product-form{ 
-            display:none; 
-        }
-        .products-list{ 
-            margin-top:2rem; 
-            max-height:400px; 
-            overflow-y:auto; 
-            border: 1px solid #eee;
-            border-radius: 8px;
-            padding: 1rem;
-        }
-        .product-item{ 
-            display:flex; 
-            justify-content:space-between; 
-            align-items:center; 
-            padding:1rem; 
-            border-bottom:1px solid #eee; 
-            transition: var(--transition);
-        }
-        .product-item:hover {
-            background: #f8f9fa;
-        }
-        .product-item:last-child{ 
-            border-bottom:none; 
-        }
-        .product-item-info{ 
-            flex:1; 
-        }
-        .product-item-title{ 
-            font-weight:600; 
-            margin-bottom:.25rem; 
-        }
-        .product-item-sku{ 
-            color:var(--gray); 
-            font-size:.9rem; 
-        }
-        .product-item-price{ 
-            margin:.5rem 0; 
-            font-weight:600; 
-            color:var(--primary-dark); 
-        }
-        .edit-price-form{ 
-            display:flex; 
-            gap:.5rem; 
-            margin-top:.5rem; 
-        }
-        .edit-price-input{ 
-            width:120px; 
-            padding:5px; 
-            border:1px solid #ddd; 
-            border-radius:3px; 
-        }
-        .edit-price-btn{ 
-            background:var(--primary); 
-            color:#fff; 
-            border:none; 
-            padding:5px 10px; 
-            border-radius:3px; 
-            cursor:pointer; 
-            transition: var(--transition);
-        }
-        .edit-price-btn:hover {
-            background: var(--primary-dark);
-        }
-        .admin-buttons{ 
-            display:flex; 
-            gap:.5rem; 
-        }
-        .edit-btn{ 
-            background:var(--primary); 
-            color:#fff; 
-            border:none; 
-            padding:.5rem 1rem; 
-            border-radius:5px; 
-            cursor:pointer; 
-            transition: var(--transition);
-        }
-        .edit-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-        .delete-btn{ 
-            background:var(--secondary); 
-            color:#fff; 
-            border:none; 
-            padding:.5rem 1rem; 
-            border-radius:5px; 
-            cursor:pointer; 
-            transition: var(--transition);
-        }
-        .delete-btn:hover {
-            background: #e04e4e;
-            transform: translateY(-2px);
-        }
-        
-        /* Footer mejorado */
-        footer{ 
-            text-align:center; 
-            padding:3rem 2rem; 
-            margin-top:3rem; 
-            background:var(--dark); 
-            color:#fff; 
-        }
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-        .footer-link {
-            color: #fff;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-        .footer-link:hover {
-            color: var(--primary);
-        }
-        
-        /* Estados de carga */
-        .loading {
-            position: relative;
-            overflow: hidden;
-        }
-        .loading::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            animation: loading 1.5s infinite;
-        }
-        @keyframes loading {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-        
-        /* Mensajes de estado */
-        .message {
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            text-align: center;
-            font-weight: 500;
-        }
-        .message.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .message.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        .message.info {
-            background: #d1ecf1;
-            color: #0c5460;
-            border: 1px solid #bee5eb;
-        }
-        
         /* No products */
         .no-products{ 
             text-align:center; 
@@ -823,9 +597,6 @@
             }
             .form-row{ flex-direction:column; gap:0; }
             .admin-btn{ position:static; margin-top:1rem; }
-            .product-item{ flex-direction:column; align-items:flex-start; gap:1rem; }
-            .admin-buttons{ width:100%; justify-content:flex-end; }
-            .search-container{ flex-direction:column; }
             .trust-badges { gap: 0.5rem; }
             .badge { font-size: 0.8rem; padding: 0.4rem 0.8rem; }
             .filters-container {
@@ -840,25 +611,7 @@
             .products-grid{ grid-template-columns:1fr; }
             h1{ font-size:1.8rem; }
             .landing-page{ padding:0; }
-            .pin-input input{ width:40px; height:40px; }
             .trust-section { flex-direction: column; gap: 1rem; }
-            .footer-links {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
-        .danger-btn{ 
-            background: var(--secondary); 
-            color:#fff; 
-            border:none; 
-            padding:.5rem 1rem; 
-            border-radius:6px; 
-            font-weight:600; 
-            transition: var(--transition);
-        }
-        .danger-btn:hover {
-            background: #e04e4e;
-            transform: translateY(-2px);
         }
         
         /* Animaciones adicionales */
@@ -1015,74 +768,6 @@
         </div>
     </div>
 
-    <!-- Admin Panel mejorado -->
-    <div class="admin-panel" id="admin-panel">
-        <div class="admin-content">
-            <div class="admin-header">
-                <h2>Panel de Administración</h2>
-                <button class="close-btn" id="close-admin"><i class="fas fa-times"></i></button>
-            </div>
-
-            <div class="pin-form" id="pin-form">
-                <h3>Ingresa el PIN de acceso</h3>
-                <div class="pin-input">
-                    <input type="password" maxlength="1" id="pin1" class="pin-digit">
-                    <input type="password" maxlength="1" id="pin2" class="pin-digit">
-                    <input type="password" maxlength="1" id="pin3" class="pin-digit">
-                    <input type="password" maxlength="1" id="pin4" class="pin-digit">
-                </div>
-                <button class="submit-btn" id="verify-pin">Verificar PIN</button>
-                <p id="pin-error" style="color:red;margin-top:1rem;display:none;">PIN incorrecto. Intenta nuevamente.</p>
-            </div>
-
-            <div class="add-product-form" id="add-product-form">
-                <div style="display:flex; justify-content:space-between; align-items:center; gap:1rem; margin-bottom:1rem;">
-                    <h3>Gestión de Productos</h3>
-                    <button id="reset-catalog-btn" class="danger-btn"><i class="fas fa-rotate"></i> Reiniciar catálogo</button>
-                </div>
-                
-                <div class="message info">
-                    <i class="fas fa-info-circle"></i> Actualmente tienes <span id="product-count">0</span> productos en tu catálogo.
-                </div>
-                
-                <form id="new-product-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="new-product-title">Nombre del Producto</label>
-                            <input type="text" id="new-product-title" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="new-product-sku">SKU (debe ser único)</label>
-                            <input type="text" id="new-product-sku" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="new-product-price">Precio (Guaraníes)</label>
-                        <input type="number" id="new-product-price" class="form-control" min="0" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="new-product-image">URL de la Imagen</label>
-                        <input type="url" id="new-product-image" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="new-product-description">Descripción del Producto</label>
-                        <textarea id="new-product-description" class="form-control" rows="4" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="new-product-features">Características (separadas por comas)</label>
-                        <input type="text" id="new-product-features" class="form-control" placeholder="Ej: Alta calidad, Duradero, Portátil" required>
-                    </div>
-                    <button type="submit" class="submit-btn"><i class="fas fa-plus"></i> Agregar Producto</button>
-                </form>
-
-                <div class="products-list">
-                    <h3>Productos Actuales</h3>
-                    <div id="admin-products-list"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <button class="scroll-top" id="scroll-top">
         <i class="fas fa-chevron-up"></i>
     </button>
@@ -1090,60 +775,14 @@
     <footer>
         <div class="footer-content">
             <p>&copy; 2025 Catálogo de Productos Premium. Todos los derechos reservados.</p>
-            <div class="footer-links">
-                <a href="#" class="footer-link">Términos y Condiciones</a>
-                <a href="#" class="footer-link">Política de Privacidad</a>
-                <a href="#" class="footer-link">Contacto</a>
-                <a href="#" class="footer-link">Sobre Nosotros</a>
-            </div>
         </div>
     </footer>
 
     <script>
-        // ================== MEJORAS PROFESIONALES ==================
-        
-        // ===== Persistencia mejorada =====
-        const STORAGE_KEY = 'catalog_products_pro_v1';
-        const CART_STORAGE_KEY = 'catalog_cart_v1';
-
-        function saveProductsToStorage() {
-            try {
-                const payload = JSON.stringify(products);
-                localStorage.setItem(STORAGE_KEY, payload);
-                console.log('Productos guardados:', products.length);
-                return true;
-            } catch(e){
-                console.warn('No se pudo guardar en localStorage:', e);
-                try { 
-                    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(products)); 
-                    return true;
-                } catch(_) {
-                    return false;
-                }
-            }
-        }
-
-        function loadProductsFromStorage() {
-            try {
-                const raw = localStorage.getItem(STORAGE_KEY) || sessionStorage.getItem(STORAGE_KEY);
-                if (raw) {
-                    const arr = JSON.parse(raw);
-                    if (Array.isArray(arr)) {
-                        products = arr;
-                        console.log('Productos cargados:', products.length);
-                        return true;
-                    }
-                }
-            } catch(e){
-                console.warn('No se pudo leer Storage:', e);
-            }
-            return false;
-        }
-
-        // ===== Datos iniciales mejorados =====
+        // ===== DATOS COMPLETOS DE TUS PRODUCTOS =====
         const DEFAULT_PRODUCTS = [
             {
-                "title": "MINI ASPIRADORA PORTÁTIL",
+                "title": "MINI ASPIRADORA",
                 "sku": "ASP-001",
                 "price": 129900,
                 "image_url": "https://cdn.shopify.com/s/files/1/0885/3012/5095/files/ChatGPT_Image_9_ago_2025_09_49_46_p.m._ee0d4101-4eb8-45cf-9b23-e5e1d8c6288c.png?v=1755580613",
@@ -1153,7 +792,7 @@
                 "dateAdded": new Date().toISOString()
             },
             {
-                "title": "V-SHAPED - CINTA FACIAL ANTI-ARRUGAS",
+                "title": "V-SHAPED - CINTA FACIAL",
                 "sku": "V-S-002",
                 "price": 120000,
                 "image_url": "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Imagen_de_WhatsApp_2025-10-12_a_las_12.59.36_b6026cac.jpg?v=1760415021",
@@ -1162,95 +801,356 @@
                 "category": "Belleza",
                 "dateAdded": new Date().toISOString()
             },
-            // ... (otros productos con estructura similar)
+            {
+                "title": "NIVELADORAS X 4",
+                "sku": "NIVE-003",
+                "price": 99000,
+                "image_url": "https://cdn.shopify.com/s/files/1/0885/3012/5095/files/D_NQ_NP_928396-MLA76742057946_062024-O_184afc35-97d9-4de7-a312-68808e057481.webp?v=1757838613",
+                "description": "Set de 4 niveladoras profesionales para trabajos de construcción y bricolaje. Precisión garantizada y fácil de usar.",
+                "features": ["Set de 4 unidades", "Precisión profesional", "Duraderas", "Para múltiples usos"],
+                "category": "Herramientas",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "PLANTILLA ORTOPÉDICA | ORTOFLEX 5D®",
+                "sku": "ORTOPIEX-004",
+                "price": 159000,
+                "image_url": "https://cdn.shopify.com/s/files/1/0885/3012/5095/files/ChatGPT_Image_8_jun_2025_01_04_14_a.m._7b2cf86c-8fe2-44ec-a98a-2f3be15ebfe9.png?v=1757832927",
+                "description": "Plantillas ortopédicas Ortoflex 5D con tecnología de amortiguación avanzada. Alivian el dolor de pies y espalda, mejorando la postura.",
+                "features": ["Tecnología 5D", "Amortiguación avanzada", "Alivia dolores", "Mejora postura"],
+                "category": "Salud",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "MINI CAMARA SPY",
+                "sku": "SPY-005",
+                "price": 179000,
+                "image_url": "https://cdn.shopify.com/s/files/1/0885/3012/5095/files/Captura_de_pantalla_2025-07-21_013411.png?v=1757887583",
+                "description": "Mini cámara espía de alta definición, discreta y fácil de ocultar. Ideal para seguridad doméstica o vigilancia.",
+                "features": ["Alta definición", "Discreta", "Fácil de ocultar", "Batería de larga duración"],
+                "category": "Seguridad",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "LINTERNA POTENTE CON ZOOM",
+                "sku": "LINT-006",
+                "price": 189000,
+                "image_url": "https://acdn-us.mitiendanube.com/stores/001/131/056/products/linterr1-883f44649ed5698ece16878282190084-640-0.jpg",
+                "description": "Linterna potente con zoom ajustable, ideal para camping, emergencias o trabajos de precisión. Alcance de hasta 500 metros.",
+                "features": ["Zoom ajustable", "Alcance 500m", "Resistente al agua", "Batería recargable"],
+                "category": "Outdoor",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "COMBO DE PERFUMES / ONE MILLION / 212",
+                "sku": "PEFUM-007",
+                "price": 369000,
+                "image_url": "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/WhatsApp_Image_2025-05-12_at_19.24.47.jpg?v=1758052245",
+                "description": "Combo exclusivo de perfumes One Million y 212. Fragancias duraderas y elegantes para ocasiones especiales.",
+                "features": ["Fragancias exclusivas", "Duraderas", "Elegantes", "Combo especial"],
+                "category": "Belleza",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "SOPORTE REGULABLE PARA ELECTRODOMESTICOS",
+                "sku": "SOP-008",
+                "price": 145000,
+                "image_url": "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Captura_de_pantalla_2025-08-31_013252.png?v=1756670358",
+                "description": "Soporte regulable para electrodomésticos, ideal para microondas, air fryers y otros dispositivos de cocina. Ahorra espacio y organiza tu cocina.",
+                "features": ["Regulable", "Ahorra espacio", "Fácil instalación", "Material resistente"],
+                "category": "Hogar",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "PISTOLA MASAJEADORA",
+                "sku": "PIS-010",
+                "price": 169000,
+                "image_url": "https://http2.mlstatic.com/D_NQ_NP_863788-MLA78270636317_082024-O.webp",
+                "description": "Pistola masajeadora profesional para aliviar tensiones musculares. Múltiples cabezales y velocidades para un masaje personalizado.",
+                "features": ["Profesional", "Múltiples cabezales", "Velocidades ajustables", "Alivia tensiones"],
+                "category": "Salud",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "CORRECTOR DE POSTURA X",
+                "sku": "CORREC-011",
+                "price": 179000,
+                "image_url": "https://www.skylinestoree.online/cdn/shop/files/fajacorrectora3_540x_d6e03ef1-f416-4751-aba8-e8d3bd49dd95.jpg?v=1752811848&width=600",
+                "description": "Corrector de postura ergonómico que ayuda a mantener una postura correcta durante el día. Ideal para personas que trabajan sentadas.",
+                "features": ["Ergonómico", "Ajustable", "Material transpirable", "Mejora postura"],
+                "category": "Salud",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "💙🦶 Pack Bienestar: 2 Pares de Medias Terapéuticas",
+                "sku": "MEDIA-012",
+                "price": 120000,
+                "image_url": "https://jv7dta-ka.myshopify.com/cdn/shop/files/ChatGPTImage19ago2025_01_50_42a.m..png?v=1755579070&width=600",
+                "description": "Pack de 2 pares de medias terapéuticas que mejoran la circulación y reducen la fatiga en los pies. Ideales para uso diario.",
+                "features": ["Mejora circulación", "Reduce fatiga", "Pack de 2 pares", "Material transpirable"],
+                "category": "Salud",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "COMBO DIOSA",
+                "sku": "COMBO-DIOSA-013",
+                "price": 295000,
+                "image_url": "https://jv7dta-ka.myshopify.com/cdn/shop/files/Captura_de_pantalla_2025-07-22_020430_abbf3cfe-023e-4117-b3c6-284092688429.png?v=1753160734&width=493",
+                "description": "Combo Diosa con productos de belleza y cuidado personal seleccionados para realzar tu belleza natural.",
+                "features": ["Productos seleccionados", "Cuidado personal", "Realza belleza", "Combo exclusivo"],
+                "category": "Belleza",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "Mini GPS con imán y batería ✨ Geo Ultra",
+                "sku": "GPS-014",
+                "price": 185000,
+                "image_url": "https://jv7dta-ka.myshopify.com/cdn/shop/files/S86697bbae4184a99a675f0ad713badd8d.webp?v=1750465534&width=600",
+                "description": "Mini GPS con imán incorporado y batería de larga duración. Ideal para localizar objetos importantes o mascotas.",
+                "features": ["Con imán", "Batería larga duración", "Aplicación móvil", "Localización en tiempo real"],
+                "category": "Tecnología",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "KIT PERFUMES: ONE MILLON, BLUE, SAUVAGE",
+                "sku": "SAUVAGE-015",
+                "price": 369000,
+                "image_url": "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Captura_de_pantalla_2025-09-19_145822.jpg?v=1758304744",
+                "description": "Kit de perfumes con las fragancias One Million, Blue y Sauvage. Tres opciones para diferentes ocasiones y estilos.",
+                "features": ["Tres fragancias", "Para diferentes ocasiones", "Elegantes", "Duraderas"],
+                "category": "Belleza",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "Corte Fino/ Afilador de Cuchillos y Tijeras🔪✂️",
+                "sku": "AFI-016",
+                "price": 109000,
+                "image_url": "https://jv7dta-ka.myshopify.com/cdn/shop/files/afilador1.webp?v=1753405987&width=600",
+                "description": "Afilador profesional para cuchillos y tijeras. Mantén tus herramientas de corte siempre afiladas y listas para usar.",
+                "features": ["Para cuchillos y tijeras", "Fácil de usar", "Resultados profesionales", "Seguro"],
+                "category": "Hogar",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "COMBO PERFUMES X2 BAD BOY + INVICTUS",
+                "sku": "BADBOY-017",
+                "price": 369000,
+                "image_url": "https://jv7dta-ka.myshopify.com/cdn/shop/files/Post_para_instagram_datos_de_pago_moderno_azul_2.png?v=1753396867&width=600",
+                "description": "Combo de perfumes Bad Boy e Invictus. Fragancias masculinas intensas y seductoras para el hombre moderno.",
+                "features": ["Fragancias masculinas", "Intensas", "Seductoras", "Combo especial"],
+                "category": "Belleza",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "CREMA PARA HONGO",
+                "sku": "HONGO-018",
+                "price": 120000,
+                "image_url": "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/WhatsApp_Image_2025-06-30_at_02.07.48.jpg?v=1758810936",
+                "description": "Crema antifúngica efectiva para el tratamiento de hongos en la piel. Fórmula clínicamente probada para resultados rápidos.",
+                "features": ["Antifúngica", "Resultados rápidos", "Fórmula probada", "Fácil aplicación"],
+                "category": "Salud",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "PLANTILLA NAFOING",
+                "sku": "NAF-019",
+                "price": 129900,
+                "image_url": "https://digital-world.in.ua/wa-data/public/shop/products/73/21/2173/images/9980/9980.970.jpg",
+                "description": "Plantillas NAFOING con tecnología de amortiguación y soporte arqueado. Ideales para el confort diario y la salud de tus pies.",
+                "features": ["Amortiguación avanzada", "Soporte arqueado", "Confort diario", "Material de calidad"],
+                "category": "Salud",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "HIDROLAVADORA PORTATIL",
+                "sku": "HIDRO-020",
+                "price": 295000,
+                "image_url": "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Captura_de_pantalla_2025-11-05_201420.jpg?v=1762384557",
+                "description": "Hidrolavadora portátil con potencia profesional. Ideal para limpiar autos, bicicletas, muebles y más. Fácil de transportar y usar.",
+                "features": ["Portátil", "Potencia profesional", "Fácil de usar", "Múltiples usos"],
+                "category": "Hogar",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "LUCES NAVIDEÑAS COLORIDAS CON PANEL SOLAR 20 METROS BLANCO",
+                "sku": "LUCNAVI-021",
+                "price": 159900,
+                "image_url": "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Imagen_de_WhatsApp_2025-09-25_a_las_01.03.55_e8205f5b.jpg?v=1759102624",
+                "description": "Luces navideñas coloridas de 20 metros con panel solar. Decoración ecológica y económica para tus fiestas.",
+                "features": ["Panel solar", "20 metros de longitud", "Colores vibrantes", "Ecológico"],
+                "category": "Hogar",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "PARLANTE TIPO JBL G4",
+                "sku": "JBL-022",
+                "price": 620000,
+                "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSs0vkbIqtSK_Qufj8C9Y2Lf3Y0kUlelJTQJg&s",
+                "description": "Parlante Bluetooth tipo JBL G4 con sonido de alta calidad y batería de larga duración. Ideal para fiestas y reuniones.",
+                "features": ["Sonido de alta calidad", "Batería larga duración", "Bluetooth", "Diseño portátil"],
+                "category": "Electrónica",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "SUPER COMBO 3x1 de Perfumes para Mujeres 30ML🌸",
+                "sku": "PER30ML-023",
+                "price": 269000,
+                "image_url": "https://jv7dta-ka.myshopify.com/cdn/shop/files/ChatGPT_Image_15_jul_2025_03_10_36_p.m..png?v=1752603067&width=713",
+                "description": "Super combo 3x1 de perfumes para mujeres en presentación de 30ml. Tres fragancias elegantes y femeninas en un solo pack.",
+                "features": ["Tres fragancias", "Presentación 30ml", "Elegantes", "Femeninas"],
+                "category": "Belleza",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "RoyalBee Wax CERA PARA MADERA Y CUERO✨",
+                "sku": "BEEWAS-024",
+                "price": 120000,
+                "image_url": "https://jv7dta-ka.myshopify.com/cdn/shop/files/ChatGPT_Image_4_oct_2025_03_57_23_p.m..png?v=1759604271&width=600",
+                "description": "Cera RoyalBee para el cuidado y protección de madera y cuero. Restaura el brillo natural y protege contra el desgaste.",
+                "features": ["Para madera y cuero", "Restaura brillo", "Protege del desgaste", "Fácil aplicación"],
+                "category": "Hogar",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "Lampara Solar + kit De Herramienta",
+                "sku": "LINKINT-025",
+                "price": 169000,
+                "image_url": "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Imagen_de_WhatsApp_2025-10-11_a_las_23.38.41_6c489671.jpg?v=1760236797",
+                "description": "Lámpara solar con kit de herramientas incluido. Iluminación ecológica y herramientas básicas para el hogar.",
+                "features": ["Energía solar", "Kit de herramientas", "Ecológica", "Práctica"],
+                "category": "Herramientas",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "SOMBRILLA PARA AUTOMÓVILES",
+                "sku": "SOMBRI-026",
+                "price": 120000,
+                "image_url": "https://cdn.shopify.com/s/files/1/0885/3012/5095/files/Captura_de_pantalla_2025-10-13_100601.jpg?v=1760360812",
+                "description": "Sombrilla para automóviles que protege el interior del calor solar. Mantiene tu auto fresco y previene el desgaste de los interiores.",
+                "features": ["Protección solar", "Mantiene fresco", "Fácil de instalar", "Tamaño universal"],
+                "category": "Automotriz",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "IRRIGADOR BUCAL",
+                "sku": "IRRI-027",
+                "price": 320000,
+                "image_url": "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Captura_de_pantalla_2025-10-13_100619.jpg?v=1760360812",
+                "description": "Irrigador bucal para una limpieza dental profunda. Elimina restos de comida y placa bacteriana de lugares difíciles de alcanzar.",
+                "features": ["Limpieza profunda", "Múltiples boquillas", "Presión ajustable", "Fácil de usar"],
+                "category": "Salud",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "Clip Nasal Anti-Ronquidos😴",
+                "sku": "CLIPNASAL-029",
+                "price": 99000,
+                "image_url": "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Captura_de_pantalla_2025-10-16_085649.jpg?v=1760615829",
+                "description": "Clip nasal anti-ronquidos que mejora la respiración durante el sueño. Solución cómoda y efectiva para ronquidos leves.",
+                "features": ["Anti-ronquidos", "Mejora respiración", "Cómodo", "Efectivo"],
+                "category": "Salud",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "ASIPIRADORA INTELIGENTE",
+                "sku": "ASPIRADORAINTE-29",
+                "price": 279000,
+                "image_url": "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Imagen_de_WhatsApp_2025-10-16_a_las_11.11.48_140b0bd7.jpg?v=1760623973",
+                "description": "Aspiradora inteligente con navegación automática y aplicación móvil. Limpia tu hogar de forma autónoma y eficiente.",
+                "features": ["Navegación automática", "App móvil", "Limpieza eficiente", "Programable"],
+                "category": "Hogar",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "SECADOR DE ROPA PORTATIL",
+                "sku": "SECAPORT-030",
+                "price": 299000,
+                "image_url": "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Captura_de_pantalla_2025-10-16_112112.jpg?v=1760624483",
+                "description": "Secador de ropa portátil, ideal para viajes o espacios pequeños. Secado rápido y eficiente sin ocupar mucho espacio.",
+                "features": ["Portátil", "Secado rápido", "Compacto", "Eficiente"],
+                "category": "Hogar",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "🧹¡OFERTA ESPECIAL! Plumero Extensible de 2.80 m con descuento exclusivo 💥",
+                "sku": "PLUMERO-031",
+                "price": 120000,
+                "image_url": "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Captura_de_pantalla_2025-10-30_005208.jpg?v=1762320213",
+                "description": "Llega a todos los rincones sin esfuerzo, Limpieza rápida y efectiva. Reutilizable y fácil de lavar",
+                "features": ["Extensible 2.80m", "Limpieza eficiente", "Reutilizable", "Fácil de lavar"],
+                "category": "Hogar",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "Ducha Portátil Recargable Premium™",
+                "sku": "DUCHA-032",
+                "price": 220000,
+                "image_url": "https://cdn.shopify.com/s/files/1/0885/3012/5095/files/Imagen_de_WhatsApp_2025-10-17_a_las_17.51.23_4c050991.jpg?v=1760734483",
+                "description": "Ducha portátil recargable premium para camping, playa o emergencias. Presión constante y fácil de transportar.",
+                "features": ["Recargable", "Presión constante", "Portátil", "Premium"],
+                "category": "Outdoor",
+                "dateAdded": new Date().toISOString()
+            },
+            {
+                "title": "Luz Navideña con Panel Solar 20 METROS",
+                "sku": "LUZNAVIDAD-033",
+                "price": 159900,
+                "image_url": "https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Imagen_de_WhatsApp_2025-09-25_a_las_01.03.55_e8205f5b.jpg?v=1759102624",
+                "description": "Luces navideñas con panel solar para decoración ecológica. Automáticas y con múltiples modos de iluminación.",
+                "features": ["Panel solar", "Automáticas", "Múltiples modos", "Ecológicas"],
+                "category": "Hogar",
+                "dateAdded": new Date().toISOString()
+            }
         ];
 
         // ===== Config =====
         const whatsappNumber = "595993637616";
         const ADMIN_PIN = "9662";
 
-        // ===== Estado mejorado =====
+        // ===== Estado =====
         let products = [];
         let currentProduct = null;
-        let editingPriceIndex = -1;
         let filteredProducts = [];
         let sortBy = 'name';
         let sortOrder = 'asc';
 
-        // ===== Utils mejorados =====
+        // ===== Persistencia =====
+        const STORAGE_KEY = 'catalog_products_pro_v1';
+
+        function saveProductsToStorage() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+                return true;
+            } catch(e){
+                console.warn('No se pudo guardar en localStorage:', e);
+                return false;
+            }
+        }
+
+        function loadProductsFromStorage() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) {
+                    const arr = JSON.parse(raw);
+                    if (Array.isArray(arr)) {
+                        products = arr;
+                        return true;
+                    }
+                }
+            } catch(e){
+                console.warn('No se pudo leer Storage:', e);
+            }
+            return false;
+        }
+
+        // ===== Utils =====
         function formatPrice(price){
             const n = Number(price);
             if (!Number.isFinite(n)) return '0';
             return new Intl.NumberFormat('es-PY').format(n);
         }
 
-        function showMessage(message, type = 'info') {
-            // Crear elemento de mensaje
-            const messageEl = document.createElement('div');
-            messageEl.className = `message ${type}`;
-            messageEl.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i> ${message}`;
-            
-            // Insertar al inicio del container
-            const container = document.querySelector('.container');
-            container.insertBefore(messageEl, container.firstChild);
-            
-            // Auto-remover después de 5 segundos
-            setTimeout(() => {
-                messageEl.remove();
-            }, 5000);
-        }
-
-        // ===== Sistema de URLs para productos =====
-        function updateURL(sku = null) {
-            const baseUrl = window.location.origin + window.location.pathname;
-            const newUrl = sku ? `${baseUrl}?product=${encodeURIComponent(sku)}` : baseUrl;
-            window.history.replaceState({}, '', newUrl);
-        }
-
-        function getProductFromURL() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const productSKU = urlParams.get('product');
-            if (productSKU) {
-                return products.find(p => p.sku === productSKU)
-                    || DEFAULT_PRODUCTS.find(p => p.sku === productSKU)
-                    || null;
-            }
-            return null;
-        }
-
-        function shareProduct(product) {
-            const productUrl = `${window.location.origin}${window.location.pathname}?product=${encodeURIComponent(product.sku)}`;
-            if (navigator.share) {
-                navigator.share({
-                    title: product.title,
-                    text: product.description,
-                    url: productUrl
-                }).then(() => {
-                    showMessage('¡Producto compartido exitosamente!', 'success');
-                }).catch(err => {
-                    console.log('Error al compartir:', err);
-                    copyToClipboard(productUrl);
-                });
-            } else {
-                copyToClipboard(productUrl);
-            }
-        }
-
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                showMessage('¡Enlace copiado al portapapeles! Puedes compartirlo ahora.', 'success');
-            }).catch(err => {
-                const textArea = document.createElement('textarea');
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                showMessage('¡Enlace copiado al portapapeles! Puedes compartirlo ahora.', 'success');
-            });
-        }
-
-        // ===== Filtros y ordenamiento mejorados =====
+        // ===== Sistema de productos =====
         function filterAndSortProducts(){
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
             const priceFilter = document.getElementById('price-filter').value;
@@ -1272,8 +1172,6 @@
                     result = a.title.localeCompare(b.title);
                 } else if (sortBy === 'date') {
                     result = new Date(b.dateAdded || 0) - new Date(a.dateAdded || 0);
-                } else if (sortBy === 'price') {
-                    result = a.price - b.price;
                 }
                 
                 return sortOrder === 'desc' ? -result : result;
@@ -1289,7 +1187,6 @@
             generateCatalog();
         }
 
-        // ===== Catálogo mejorado =====
         function generateCatalog(){
             const container = document.getElementById('products-container');
             
@@ -1312,7 +1209,7 @@
                 const imageUrl = product.image_url || 'https://via.placeholder.com/300x200?text=Imagen+No+Disponible';
                 
                 // Añadir badge de oferta para algunos productos
-                const hasBadge = Math.random() > 0.7; // 30% de productos tendrán badge
+                const hasBadge = Math.random() > 0.7;
                 const badgeText = hasBadge ? (Math.random() > 0.5 ? '¡Oferta!' : '¡Nuevo!') : '';
                 
                 productCard.innerHTML = `
@@ -1338,7 +1235,7 @@
                 container.appendChild(productCard);
             });
 
-            // Agregar event listeners a los botones
+            // Agregar event listeners
             document.querySelectorAll('.whatsapp-btn').forEach(btn => {
                 btn.addEventListener('click', function(){
                     const productData = JSON.parse(this.getAttribute('data-product').replace(/&#39;/g,"'"));
@@ -1354,10 +1251,8 @@
             });
         }
 
-        // ===== Landing mejorada =====
         function openLandingPage(product){
             currentProduct = product;
-            updateURL(product.sku);
 
             document.getElementById('landing-product-title').textContent = product.title;
             document.getElementById('landing-product-name').textContent = product.title;
@@ -1387,7 +1282,6 @@
             document.getElementById('landing-page').style.display = 'block';
             document.body.style.overflow = 'hidden';
             
-            // Scroll al inicio de la landing
             window.scrollTo(0, 0);
         }
 
@@ -1407,7 +1301,6 @@
         }
 
         function closeLandingPage(){
-            updateURL();
             document.getElementById('landing-page').style.display = 'none';
             document.body.style.overflow = 'auto';
             document.getElementById('purchase-form').reset();
@@ -1435,187 +1328,36 @@
             const link = `https://wa.me/${whatsappNumber}?text=${encoded}`;
             window.open(link, '_blank');
             
-            showMessage('¡Gracias por tu pedido! Te contactaremos pronto por WhatsApp.', 'success');
-            setTimeout(() => { closeLandingPage(); }, 1500);
+            setTimeout(() => { closeLandingPage(); alert('¡Gracias por tu pedido! Te contactaremos pronto por WhatsApp.'); }, 1000);
         }
 
-        // ===== Admin mejorado =====
-        function openAdminPanel(){
-            document.getElementById('admin-panel').style.display = 'flex';
-            document.getElementById('pin-form').style.display = 'block';
-            document.getElementById('add-product-form').style.display = 'none';
-            document.getElementById('pin-error').style.display = 'none';
-            document.querySelectorAll('.pin-digit').forEach(i => i.value = '');
-            document.getElementById('pin1').focus();
-        }
-
-        function closeAdminPanel(){
-            document.getElementById('admin-panel').style.display = 'none';
-            document.getElementById('new-product-form').reset();
-            editingPriceIndex = -1;
-        }
-
-        function verifyPin(){
-            const enteredPin = ['pin1','pin2','pin3','pin4'].map(id => document.getElementById(id).value).join('');
-            if (enteredPin === ADMIN_PIN){
-                document.getElementById('pin-form').style.display = 'none';
-                document.getElementById('add-product-form').style.display = 'block';
-                updateAdminProductsList();
-            } else {
-                document.getElementById('pin-error').style.display = 'block';
-                document.querySelectorAll('.pin-digit').forEach(i => i.value = '');
-                document.getElementById('pin1').focus();
-            }
-        }
-
-        function addNewProduct(e){
-            e.preventDefault();
-
-            const title = (document.getElementById('new-product-title').value || '').trim();
-            const sku = (document.getElementById('new-product-sku').value || '').trim();
-            const priceRaw = document.getElementById('new-product-price').value;
-            const image_url = (document.getElementById('new-product-image').value || '').trim();
-            const description = (document.getElementById('new-product-description').value || '').trim();
-            const featuresRaw = (document.getElementById('new-product-features').value || '').trim();
-
-            const price = Number(priceRaw);
-            if (!title || !sku || !Number.isFinite(price) || price < 0 || !image_url || !description) {
-                showMessage('Completa todos los campos y usa un precio válido (número ≥ 0).', 'error');
-                return;
-            }
-            if (products.some(p => p.sku === sku)){
-                showMessage('Ya existe un producto con ese SKU. Usa un SKU único.', 'error');
-                return;
-            }
-
-            const features = featuresRaw
-                ? featuresRaw.split(',').map(f => f.trim()).filter(Boolean)
-                : [];
-
-            const newProduct = { 
-                title, 
-                sku, 
-                price, 
-                image_url, 
-                description, 
-                features,
-                category: "General",
-                dateAdded: new Date().toISOString()
-            };
-
-            try {
-                products.push(newProduct);
-                if (saveProductsToStorage()) {
-                    updateAdminProductsList();
-                    filteredProducts = [...products];
-                    generateCatalog();
-                    document.getElementById('new-product-form').reset();
-                    showMessage('Producto agregado correctamente', 'success');
-                } else {
-                    showMessage('Error al guardar el producto. Intenta nuevamente.', 'error');
-                }
-            } catch(err){
-                console.error('Error agregando producto:', err);
-                showMessage('No se pudo agregar el producto. Revisa la consola para más detalles.', 'error');
-            }
-        }
-
-        function updateAdminProductsList(){
-            const container = document.getElementById('admin-products-list');
-            const productCount = document.getElementById('product-count');
-            
-            productCount.textContent = products.length;
-            container.innerHTML = '';
-            
-            if (products.length === 0) {
-                container.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--gray);">No hay productos en el catálogo</p>';
-                return;
-            }
-            
-            products.forEach((product,index) => {
-                const item = document.createElement('div');
-                item.className = 'product-item';
-                const isEditing = editingPriceIndex === index;
-                item.innerHTML = `
-                    <div class="product-item-info">
-                        <div class="product-item-title">${product.title}</div>
-                        <div class="product-item-sku">SKU: ${product.sku}</div>
-                        <div class="product-item-price">
-                            ${isEditing ?
-                                `<div class="edit-price-form">
-                                    <input type="number" class="edit-price-input" value="${product.price}" min="0" id="edit-price-${index}">
-                                    <button class="edit-price-btn" onclick="savePrice(${index})">Guardar</button>
-                                    <button class="edit-price-btn" style="background: var(--gray)" onclick="cancelEditPrice()">Cancelar</button>
-                                </div>` :
-                                `Precio: Gs. ${formatPrice(product.price)}`
-                            }
-                        </div>
-                    </div>
-                    <div class="admin-buttons">
-                        ${!isEditing ? `<button class="edit-btn" onclick="editPrice(${index})"><i class="fas fa-edit"></i> Editar Precio</button>` : ''}
-                        <button class="delete-btn" onclick="deleteProduct(${index})"><i class="fas fa-trash"></i> Eliminar</button>
-                    </div>`;
-                container.appendChild(item);
-            });
-        }
-
-        function editPrice(index){
-            editingPriceIndex = index;
-            updateAdminProductsList();
-        }
-
-        function savePrice(index){
-            const val = document.getElementById(`edit-price-${index}`).value;
-            const newPrice = Number(val);
-            if (!Number.isFinite(newPrice) || newPrice < 0){
-                showMessage('Por favor ingresa un precio válido', 'error');
-                return;
-            }
-            products[index].price = newPrice;
-            editingPriceIndex = -1;
-            if (saveProductsToStorage()) {
-                updateAdminProductsList();
-                filteredProducts = [...products];
-                generateCatalog();
-                showMessage('Precio actualizado correctamente', 'success');
-            } else {
-                showMessage('Error al guardar el precio. Intenta nuevamente.', 'error');
-            }
-        }
-
-        function cancelEditPrice(){
-            editingPriceIndex = -1;
-            updateAdminProductsList();
-        }
-
-        function deleteProduct(index){
-            if (confirm(`¿Estás seguro de eliminar "${products[index].title}"? Esta acción no se puede deshacer.`)){
-                products.splice(index,1);
-                editingPriceIndex = -1;
-                if (saveProductsToStorage()) {
-                    filteredProducts = [...products];
-                    updateAdminProductsList();
-                    generateCatalog();
-                    showMessage('Producto eliminado correctamente', 'success');
-                } else {
-                    showMessage('Error al eliminar el producto. Intenta nuevamente.', 'error');
-                }
-            }
-        }
-
-        function handlePinInput(){
-            const inputs = document.querySelectorAll('.pin-digit');
-            inputs.forEach((input,idx) => {
-                input.addEventListener('input', function(){ 
-                    if(this.value.length === 1 && idx < inputs.length-1){ 
-                        inputs[idx+1].focus(); 
-                    } 
+        function shareProduct(product) {
+            const productUrl = `${window.location.origin}${window.location.pathname}?product=${encodeURIComponent(product.sku)}`;
+            if (navigator.share) {
+                navigator.share({
+                    title: product.title,
+                    text: product.description,
+                    url: productUrl
+                }).catch(err => {
+                    console.log('Error al compartir:', err);
+                    copyToClipboard(productUrl);
                 });
-                input.addEventListener('keydown', function(e){ 
-                    if(e.key === 'Backspace' && this.value.length === 0 && idx > 0){ 
-                        inputs[idx-1].focus(); 
-                    } 
-                });
+            } else {
+                copyToClipboard(productUrl);
+            }
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('¡Enlace copiado al portapapeles! Puedes compartirlo ahora.');
+            }).catch(err => {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('¡Enlace copiado al portapapeles! Puedes compartirlo ahora.');
             });
         }
 
@@ -1639,73 +1381,17 @@
             });
         }
 
-        // ===== Mejoras de sincronización =====
-        function mergeMissingDefaultsIntoProducts() {
-            const bySku = new Map(products.map(p => [p.sku, p]));
-            let added = 0;
-            DEFAULT_PRODUCTS.forEach(def => {
-                if (!bySku.has(def.sku)) { 
-                    products.push(def); 
-                    added++; 
-                }
-            });
-            if (added > 0) { 
-                saveProductsToStorage(); 
-                console.log(`Se agregaron ${added} producto(s) faltante(s) desde DEFAULT_PRODUCTS.`); 
-            }
-        }
-
-        function maybeResetFromURL() {
-            const params = new URLSearchParams(location.search);
-            if (params.get('reset') === '1') {
-                localStorage.removeItem(STORAGE_KEY);
-                sessionStorage.removeItem(STORAGE_KEY);
-                products = [...DEFAULT_PRODUCTS];
-                saveProductsToStorage();
-                console.log('Catálogo reseteado desde URL (?reset=1).');
-                showMessage('Catálogo reiniciado a valores por defecto.', 'info');
-            }
-        }
-
-        function addResetButtonAction(){
-            const btn = document.getElementById('reset-catalog-btn');
-            if (!btn) return;
-            btn.addEventListener('click', () => {
-                if (confirm('¿Estás seguro de reiniciar el catálogo? Esto eliminará todos los productos agregados y volverá a los valores por defecto.')){
-                    localStorage.removeItem(STORAGE_KEY);
-                    sessionStorage.removeItem(STORAGE_KEY);
-                    products = [...DEFAULT_PRODUCTS];
-                    saveProductsToStorage();
-                    filteredProducts = [...products];
-                    generateCatalog();
-                    updateAdminProductsList();
-                    showMessage('Catálogo reiniciado correctamente.', 'success');
-                }
-            });
-        }
-
-        // ===== Init mejorado =====
+        // ===== Init =====
         document.addEventListener('DOMContentLoaded', function(){
             // Cargar productos
-            maybeResetFromURL();
-            
             const loaded = loadProductsFromStorage();
             if (!loaded || products.length === 0) {
                 products = [...DEFAULT_PRODUCTS];
                 saveProductsToStorage();
             }
 
-            // Asegura que los productos por defecto estén presentes
-            mergeMissingDefaultsIntoProducts();
-
             filteredProducts = [...products];
             generateCatalog();
-
-            // Abrir producto desde URL si existe
-            const urlProduct = getProductFromURL();
-            if (urlProduct) {
-                openLandingPage(urlProduct);
-            }
 
             // Listeners principales
             document.getElementById('close-landing').addEventListener('click', closeLandingPage);
@@ -1718,19 +1404,6 @@
             document.getElementById('landing-page').addEventListener('click', function(e){ 
                 if(e.target === this){ closeLandingPage(); }
             });
-            document.getElementById('admin-panel').addEventListener('click', function(e){ 
-                if(e.target === this){ closeAdminPanel(); }
-            });
-
-            document.querySelector('.landing-content')?.addEventListener('click', (e) => e.stopPropagation());
-            document.querySelector('.admin-content')?.addEventListener('click', (e) => e.stopPropagation());
-
-            document.getElementById('admin-btn').addEventListener('click', openAdminPanel);
-            document.getElementById('close-admin').addEventListener('click', closeAdminPanel);
-            document.getElementById('verify-pin').addEventListener('click', verifyPin);
-            document.getElementById('new-product-form').addEventListener('submit', addNewProduct);
-            addResetButtonAction();
-            handlePinInput();
 
             // Filtros y búsqueda
             document.getElementById('search-input').addEventListener('input', filterAndSortProducts);
@@ -1764,8 +1437,7 @@
             // Inicializar scroll to top
             initScrollTop();
             
-            // Debug: Mostrar productos cargados en consola
-            console.log("Productos cargados:", products);
+            console.log("Productos cargados:", products.length);
         });
     </script>
 </body>
