@@ -26,6 +26,8 @@
         .product-sku{ color:var(--gray); font-size:.9rem; margin-bottom:1rem; }
         .whatsapp-btn{ display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:12px; background:var(--primary); color:#fff; border:none; border-radius:5px; font-size:1rem; font-weight:600; cursor:pointer; transition:background-color .3s ease; }
         .whatsapp-btn:hover{ background:var(--primary-dark); }
+        .share-btn{ display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:10px; background:var(--gray); color:#fff; border:none; border-radius:5px; font-size:0.9rem; font-weight:600; cursor:pointer; transition:background-color .3s ease; margin-top: 8px; }
+        .share-btn:hover{ background:#5a6268; }
         .landing-page{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:1000; overflow-y:auto; padding:2rem; }
         .landing-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; padding-bottom:1rem; border-bottom:1px solid #eee; }
         .close-btn{ background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--gray); }
@@ -178,6 +180,7 @@
                         </div>
                         <div class="total-price" id="total-price">Total a pagar: Gs. 0</div>
                         <button type="submit" class="submit-btn"><i class="fab fa-whatsapp"></i> Enviar pedido por WhatsApp</button>
+                        <button type="button" class="share-btn" id="share-product-btn"><i class="fas fa-share-alt"></i> Compartir este producto</button>
                     </form>
                 </div>
             </div>
@@ -212,7 +215,7 @@
                         <input type="text" id="new-product-title" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="new-product-sku">SKU</label>
+                        <label for="new-product-sku">SKU (debe ser único)</label>
                         <input type="text" id="new-product-sku" class="form-control" required>
                     </div>
                     <div class="form-group">
@@ -246,20 +249,34 @@
 
     <script>
         // ===== Persistencia =====
-        const STORAGE_KEY = 'catalog_products_v1';
+        const STORAGE_KEY = 'catalog_products_v2'; // Cambiado para evitar conflictos con versiones anteriores
+        
         function saveProductsToStorage() {
-            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(products)); }
-            catch(e){ console.warn('No se pudo guardar en localStorage:', e); }
+            try { 
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(products)); 
+                console.log('Productos guardados:', products.length);
+            }
+            catch(e){ 
+                console.warn('No se pudo guardar en localStorage:', e); 
+                alert('Error al guardar productos. Los datos podrían perderse al recargar.');
+            }
         }
+        
         function loadProductsFromStorage() {
             try {
                 const raw = localStorage.getItem(STORAGE_KEY);
                 if (raw) {
                     const arr = JSON.parse(raw);
-                    if (Array.isArray(arr)) { products = arr; }
+                    if (Array.isArray(arr)) { 
+                        products = arr;
+                        console.log('Productos cargados:', products.length);
+                        return true;
+                    }
                 }
-            } catch(e){ console.warn('No se pudo leer de localStorage:', e); }
-            filteredProducts = [...products];
+            } catch(e){ 
+                console.warn('No se pudo leer de localStorage:', e); 
+            }
+            return false;
         }
 
         // ===== Datos iniciales (por defecto) =====
@@ -302,13 +319,61 @@
         const ADMIN_PIN = "9662";
 
         // ===== Estado =====
-        let products = [...DEFAULT_PRODUCTS];
+        let products = []; // Cambiado a let para permitir reasignación
         let currentProduct = null;
         let editingPriceIndex = -1;
-        let filteredProducts = [...products];
+        let filteredProducts = [];
 
         // ===== Utils =====
         function formatPrice(price){ return new Intl.NumberFormat('es-PY').format(price); }
+        
+        // ===== Sistema de URLs para productos =====
+        function updateURL(sku = null) {
+            const baseUrl = window.location.origin + window.location.pathname;
+            const newUrl = sku ? `${baseUrl}?product=${sku}` : baseUrl;
+            window.history.replaceState({}, '', newUrl);
+        }
+        
+        function getProductFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productSKU = urlParams.get('product');
+            if (productSKU) {
+                return products.find(p => p.sku === productSKU);
+            }
+            return null;
+        }
+        
+        function shareProduct(product) {
+            const productUrl = `${window.location.origin}${window.location.pathname}?product=${product.sku}`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: product.title,
+                    text: product.description,
+                    url: productUrl
+                }).catch(err => {
+                    console.log('Error al compartir:', err);
+                    copyToClipboard(productUrl);
+                });
+            } else {
+                copyToClipboard(productUrl);
+            }
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('¡Enlace copiado al portapapeles! Puedes compartirlo ahora.');
+            }).catch(err => {
+                // Fallback para navegadores antiguos
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('¡Enlace copiado al portapapeles! Puedes compartirlo ahora.');
+            });
+        }
 
         // ===== Filtros =====
         function filterProducts(){
@@ -353,15 +418,27 @@
                         <p class="product-price">Gs. ${formatPrice(product.price)}</p>
                         <p class="product-sku">SKU: ${product.sku}</p>
                         <button class="whatsapp-btn" data-product='${JSON.stringify(product).replace(/'/g,"&#39;")}'>
-                            <i class="fab fa-whatsapp"></i> Ver producto:
+                            <i class="fab fa-whatsapp"></i> Ver producto
+                        </button>
+                        <button class="share-btn" data-product='${JSON.stringify(product).replace(/'/g,"&#39;")}'>
+                            <i class="fas fa-share-alt"></i> Compartir
                         </button>
                     </div>`;
                 container.appendChild(productCard);
             });
+            
+            // Event listeners para botones
             document.querySelectorAll('.whatsapp-btn').forEach(btn=>{
                 btn.addEventListener('click', function(){
                     const productData = JSON.parse(this.getAttribute('data-product').replace(/&#39;/g,"'"));
                     openLandingPage(productData);
+                });
+            });
+            
+            document.querySelectorAll('.share-btn').forEach(btn=>{
+                btn.addEventListener('click', function(){
+                    const productData = JSON.parse(this.getAttribute('data-product').replace(/&#39;/g,"'"));
+                    shareProduct(productData);
                 });
             });
         }
@@ -369,6 +446,8 @@
         // ===== Landing =====
         function openLandingPage(product){
             currentProduct = product;
+            updateURL(product.sku); // Actualizar URL con el SKU del producto
+            
             document.getElementById('landing-product-title').textContent = product.title;
             document.getElementById('landing-product-name').textContent = product.title;
             document.getElementById('landing-product-price').textContent = `Gs. ${formatPrice(product.price)}`;
@@ -391,6 +470,7 @@
             document.getElementById('landing-page').style.display='block';
             document.body.style.overflow='hidden';
         }
+        
         function updateTotalPrice(){
             const quantity = document.getElementById('customer-quantity').value;
             const totalElement = document.getElementById('total-price');
@@ -400,12 +480,16 @@
                 totalElement.textContent = `Total a pagar: Gs. ${formatPrice(total)}`;
             } else totalElement.textContent = 'Total a pagar: Gs. 0';
         }
+        
         function closeLandingPage(){
+            updateURL(); // Limpiar URL al cerrar
             document.getElementById('landing-page').style.display='none';
             document.body.style.overflow='auto';
             document.getElementById('purchase-form').reset();
             document.getElementById('total-price').textContent='Total a pagar: Gs. 0';
+            currentProduct = null;
         }
+        
         function submitForm(e){
             e.preventDefault();
             const name = document.getElementById('customer-name').value;
@@ -449,11 +533,13 @@ Por favor, contáctenme para proceder con la compra. ¡Gracias!`;
             document.querySelectorAll('.pin-digit').forEach(i=>i.value='');
             document.getElementById('pin1').focus();
         }
+        
         function closeAdminPanel(){
             document.getElementById('admin-panel').style.display='none';
             document.getElementById('new-product-form').reset();
             editingPriceIndex = -1;
         }
+        
         function verifyPin(){
             const enteredPin = ['pin1','pin2','pin3','pin4'].map(id=>document.getElementById(id).value).join('');
             if (enteredPin === ADMIN_PIN){
@@ -466,6 +552,7 @@ Por favor, contáctenme para proceder con la compra. ¡Gracias!`;
                 document.getElementById('pin1').focus();
             }
         }
+        
         function addNewProduct(e){
             e.preventDefault();
             const title = document.getElementById('new-product-title').value;
@@ -475,16 +562,20 @@ Por favor, contáctenme para proceder con la compra. ¡Gracias!`;
             const description = document.getElementById('new-product-description').value;
             const features = document.getElementById('new-product-features').value.split(',').map(f=>f.trim());
 
-            if (products.some(p=>p.sku===sku)){ alert('Ya existe un producto con ese SKU. Usa un SKU único.'); return; }
+            if (products.some(p=>p.sku===sku)){ 
+                alert('Ya existe un producto con ese SKU. Usa un SKU único.'); 
+                return; 
+            }
 
             products.push({ title, sku, price, image_url, description, features });
-            saveProductsToStorage();                 // <<<<<< GUARDA
+            saveProductsToStorage(); // <<<<<< AHORA SE GUARDA CORRECTAMENTE
             updateAdminProductsList();
             filteredProducts = [...products];
             generateCatalog();
             document.getElementById('new-product-form').reset();
             alert('Producto agregado correctamente');
         }
+        
         function updateAdminProductsList(){
             const container = document.getElementById('admin-products-list');
             container.innerHTML = '';
@@ -514,29 +605,41 @@ Por favor, contáctenme para proceder con la compra. ¡Gracias!`;
                 container.appendChild(item);
             });
         }
-        function editPrice(index){ editingPriceIndex = index; updateAdminProductsList(); }
+        
+        function editPrice(index){ 
+            editingPriceIndex = index; 
+            updateAdminProductsList(); 
+        }
+        
         function savePrice(index){
             const newPrice = parseInt(document.getElementById(`edit-price-${index}`).value);
             if (isNaN(newPrice) || newPrice < 0){ alert('Por favor ingresa un precio válido'); return; }
             products[index].price = newPrice;
             editingPriceIndex = -1;
-            saveProductsToStorage();                 // <<<<<< GUARDA
+            saveProductsToStorage(); // <<<<<< AHORA SE GUARDA CORRECTAMENTE
             updateAdminProductsList();
             filteredProducts = [...products];
             generateCatalog();
             alert('Precio actualizado correctamente');
         }
-        function cancelEditPrice(){ editingPriceIndex = -1; updateAdminProductsList(); }
+        
+        function cancelEditPrice(){ 
+            editingPriceIndex = -1; 
+            updateAdminProductsList(); 
+        }
+        
         function deleteProduct(index){
             if (confirm(`¿Eliminar "${products[index].title}"?`)){
                 products.splice(index,1);
                 editingPriceIndex = -1;
-                saveProductsToStorage();             // <<<<<< GUARDA
+                saveProductsToStorage(); // <<<<<< AHORA SE GUARDA CORRECTAMENTE
                 filteredProducts = [...products];
                 updateAdminProductsList();
                 generateCatalog();
+                alert('Producto eliminado correctamente');
             }
         }
+        
         function handlePinInput(){
             const inputs = document.querySelectorAll('.pin-digit');
             inputs.forEach((input,idx)=>{
@@ -547,14 +650,29 @@ Por favor, contáctenme para proceder con la compra. ¡Gracias!`;
 
         // ===== Init =====
         document.addEventListener('DOMContentLoaded', function(){
-            // Carga persistente (si existe), si no, deja los DEFAULT
-            loadProductsFromStorage();
-            if (products.length === 0){ products = [...DEFAULT_PRODUCTS]; saveProductsToStorage(); }
+            // Carga persistente (si existe), si no, usa DEFAULT_PRODUCTS
+            const loaded = loadProductsFromStorage();
+            if (!loaded || products.length === 0) { 
+                products = [...DEFAULT_PRODUCTS]; 
+                saveProductsToStorage(); 
+            }
+            
+            filteredProducts = [...products];
             generateCatalog();
 
+            // Verificar si hay un producto en la URL
+            const urlProduct = getProductFromURL();
+            if (urlProduct) {
+                openLandingPage(urlProduct);
+            }
+
+            // Event listeners
             document.getElementById('close-landing').addEventListener('click', closeLandingPage);
             document.getElementById('purchase-form').addEventListener('submit', submitForm);
             document.getElementById('customer-quantity').addEventListener('change', updateTotalPrice);
+            document.getElementById('share-product-btn').addEventListener('click', function() {
+                if (currentProduct) shareProduct(currentProduct);
+            });
             document.getElementById('landing-page').addEventListener('click', function(e){ if(e.target===this){ closeLandingPage(); }});
 
             document.getElementById('admin-btn').addEventListener('click', openAdminPanel);
@@ -571,7 +689,3 @@ Por favor, contáctenme para proceder con la compra. ¡Gracias!`;
     </script>
 </body>
 </html>
-
-
-
-
