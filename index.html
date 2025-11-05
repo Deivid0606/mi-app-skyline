@@ -248,33 +248,45 @@
     <footer><p>&copy; 2025 Catálogo de Productos. Todos los derechos reservados.</p></footer>
 
     <script>
+        // ================== AIRBAGS DE DIAGNÓSTICO ==================
+        window.addEventListener('error', (e) => {
+            console.error('Error global:', e.error || e.message);
+            alert('Ocurrió un error inesperado. Revisa la consola (F12) para detalles.');
+        });
+        window.addEventListener('unhandledrejection', (e) => {
+            console.error('Promise no manejada:', e.reason);
+            alert('Ocurrió un error inesperado (promesa). Revisa la consola.');
+        });
+
         // ===== Persistencia =====
         const STORAGE_KEY = 'catalog_products_v2'; // Cambiado para evitar conflictos con versiones anteriores
-        
+
         function saveProductsToStorage() {
-            try { 
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(products)); 
+            try {
+                const payload = JSON.stringify(products);
+                localStorage.setItem(STORAGE_KEY, payload);
                 console.log('Productos guardados:', products.length);
-            }
-            catch(e){ 
-                console.warn('No se pudo guardar en localStorage:', e); 
+            } catch(e){
+                console.warn('No se pudo guardar en localStorage:', e);
+                // Fallback: sesión (no persistente, pero evita "crash")
+                try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(products)); } catch(_) {}
                 alert('Error al guardar productos. Los datos podrían perderse al recargar.');
             }
         }
-        
+
         function loadProductsFromStorage() {
             try {
-                const raw = localStorage.getItem(STORAGE_KEY);
+                const raw = localStorage.getItem(STORAGE_KEY) || sessionStorage.getItem(STORAGE_KEY);
                 if (raw) {
                     const arr = JSON.parse(raw);
-                    if (Array.isArray(arr)) { 
+                    if (Array.isArray(arr)) {
                         products = arr;
                         console.log('Productos cargados:', products.length);
                         return true;
                     }
                 }
-            } catch(e){ 
-                console.warn('No se pudo leer de localStorage:', e); 
+            } catch(e){
+                console.warn('No se pudo leer Storage:', e);
             }
             return false;
         }
@@ -319,21 +331,25 @@
         const ADMIN_PIN = "9662";
 
         // ===== Estado =====
-        let products = []; // Cambiado a let para permitir reasignación
+        let products = [];
         let currentProduct = null;
         let editingPriceIndex = -1;
         let filteredProducts = [];
 
         // ===== Utils =====
-        function formatPrice(price){ return new Intl.NumberFormat('es-PY').format(price); }
-        
+        function formatPrice(price){
+            const n = Number(price);
+            if (!Number.isFinite(n)) return '0';
+            return new Intl.NumberFormat('es-PY').format(n);
+        }
+
         // ===== Sistema de URLs para productos =====
         function updateURL(sku = null) {
             const baseUrl = window.location.origin + window.location.pathname;
-            const newUrl = sku ? `${baseUrl}?product=${sku}` : baseUrl;
+            const newUrl = sku ? `${baseUrl}?product=${encodeURIComponent(sku)}` : baseUrl;
             window.history.replaceState({}, '', newUrl);
         }
-        
+
         function getProductFromURL() {
             const urlParams = new URLSearchParams(window.location.search);
             const productSKU = urlParams.get('product');
@@ -342,10 +358,9 @@
             }
             return null;
         }
-        
+
         function shareProduct(product) {
-            const productUrl = `${window.location.origin}${window.location.pathname}?product=${product.sku}`;
-            
+            const productUrl = `${window.location.origin}${window.location.pathname}?product=${encodeURIComponent(product.sku)}`;
             if (navigator.share) {
                 navigator.share({
                     title: product.title,
@@ -359,7 +374,7 @@
                 copyToClipboard(productUrl);
             }
         }
-        
+
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(() => {
                 alert('¡Enlace copiado al portapapeles! Puedes compartirlo ahora.');
@@ -426,7 +441,7 @@
                     </div>`;
                 container.appendChild(productCard);
             });
-            
+
             // Event listeners para botones
             document.querySelectorAll('.whatsapp-btn').forEach(btn=>{
                 btn.addEventListener('click', function(){
@@ -434,7 +449,7 @@
                     openLandingPage(productData);
                 });
             });
-            
+
             document.querySelectorAll('.share-btn').forEach(btn=>{
                 btn.addEventListener('click', function(){
                     const productData = JSON.parse(this.getAttribute('data-product').replace(/&#39;/g,"'"));
@@ -447,7 +462,7 @@
         function openLandingPage(product){
             currentProduct = product;
             updateURL(product.sku); // Actualizar URL con el SKU del producto
-            
+
             document.getElementById('landing-product-title').textContent = product.title;
             document.getElementById('landing-product-name').textContent = product.title;
             document.getElementById('landing-product-price').textContent = `Gs. ${formatPrice(product.price)}`;
@@ -470,17 +485,17 @@
             document.getElementById('landing-page').style.display='block';
             document.body.style.overflow='hidden';
         }
-        
+
         function updateTotalPrice(){
             const quantity = document.getElementById('customer-quantity').value;
             const totalElement = document.getElementById('total-price');
             if (quantity === 'mas'){ totalElement.textContent='Total a pagar: Consultar por más de 10 unidades'; return; }
             if (quantity && currentProduct){
-                const total = currentProduct.price * parseInt(quantity);
+                const total = Number(currentProduct.price) * parseInt(quantity,10);
                 totalElement.textContent = `Total a pagar: Gs. ${formatPrice(total)}`;
             } else totalElement.textContent = 'Total a pagar: Gs. 0';
         }
-        
+
         function closeLandingPage(){
             updateURL(); // Limpiar URL al cerrar
             document.getElementById('landing-page').style.display='none';
@@ -489,7 +504,7 @@
             document.getElementById('total-price').textContent='Total a pagar: Gs. 0';
             currentProduct = null;
         }
-        
+
         function submitForm(e){
             e.preventDefault();
             const name = document.getElementById('customer-name').value;
@@ -500,7 +515,7 @@
             const message = document.getElementById('customer-message').value;
 
             let total = 0, quantityText = quantity;
-            if (quantity !== 'mas'){ total = currentProduct.price * parseInt(quantity); quantityText = `${quantity} unidad(es)`; }
+            if (quantity !== 'mas'){ total = Number(currentProduct.price) * parseInt(quantity,10); quantityText = `${quantity} unidad(es)`; }
 
             const whatsappMessage = `Hola, estoy interesado en comprar el siguiente producto:
 
@@ -533,13 +548,13 @@ Por favor, contáctenme para proceder con la compra. ¡Gracias!`;
             document.querySelectorAll('.pin-digit').forEach(i=>i.value='');
             document.getElementById('pin1').focus();
         }
-        
+
         function closeAdminPanel(){
             document.getElementById('admin-panel').style.display='none';
             document.getElementById('new-product-form').reset();
             editingPriceIndex = -1;
         }
-        
+
         function verifyPin(){
             const enteredPin = ['pin1','pin2','pin3','pin4'].map(id=>document.getElementById(id).value).join('');
             if (enteredPin === ADMIN_PIN){
@@ -552,30 +567,47 @@ Por favor, contáctenme para proceder con la compra. ¡Gracias!`;
                 document.getElementById('pin1').focus();
             }
         }
-        
+
         function addNewProduct(e){
             e.preventDefault();
-            const title = document.getElementById('new-product-title').value;
-            const sku = document.getElementById('new-product-sku').value;
-            const price = parseInt(document.getElementById('new-product-price').value);
-            const image_url = document.getElementById('new-product-image').value;
-            const description = document.getElementById('new-product-description').value;
-            const features = document.getElementById('new-product-features').value.split(',').map(f=>f.trim());
 
-            if (products.some(p=>p.sku===sku)){ 
-                alert('Ya existe un producto con ese SKU. Usa un SKU único.'); 
-                return; 
+            const title = (document.getElementById('new-product-title').value || '').trim();
+            const sku = (document.getElementById('new-product-sku').value || '').trim();
+            const priceRaw = document.getElementById('new-product-price').value;
+            const image_url = (document.getElementById('new-product-image').value || '').trim();
+            const description = (document.getElementById('new-product-description').value || '').trim();
+            const featuresRaw = (document.getElementById('new-product-features').value || '').trim();
+
+            const price = Number(priceRaw);
+            if (!title || !sku || !Number.isFinite(price) || price < 0 || !image_url || !description) {
+                alert('Completa todos los campos y usa un precio válido (número ≥ 0).');
+                return;
+            }
+            if (products.some(p=> p.sku === sku)){
+                alert('Ya existe un producto con ese SKU. Usa un SKU único.');
+                return;
             }
 
-            products.push({ title, sku, price, image_url, description, features });
-            saveProductsToStorage(); // <<<<<< AHORA SE GUARDA CORRECTAMENTE
-            updateAdminProductsList();
-            filteredProducts = [...products];
-            generateCatalog();
-            document.getElementById('new-product-form').reset();
-            alert('Producto agregado correctamente');
+            const features = featuresRaw
+                ? featuresRaw.split(',').map(f => f.trim()).filter(Boolean)
+                : [];
+
+            const newProduct = { title, sku, price, image_url, description, features };
+
+            try {
+                products.push(newProduct);
+                saveProductsToStorage();
+                updateAdminProductsList();
+                filteredProducts = [...products];
+                generateCatalog();
+                document.getElementById('new-product-form').reset();
+                alert('Producto agregado correctamente');
+            } catch(err){
+                console.error('Error agregando producto:', err);
+                alert('No se pudo agregar el producto. Revisa la consola para más detalles.');
+            }
         }
-        
+
         function updateAdminProductsList(){
             const container = document.getElementById('admin-products-list');
             container.innerHTML = '';
@@ -605,41 +637,45 @@ Por favor, contáctenme para proceder con la compra. ¡Gracias!`;
                 container.appendChild(item);
             });
         }
-        
-        function editPrice(index){ 
-            editingPriceIndex = index; 
-            updateAdminProductsList(); 
+
+        function editPrice(index){
+            editingPriceIndex = index;
+            updateAdminProductsList();
         }
-        
+
         function savePrice(index){
-            const newPrice = parseInt(document.getElementById(`edit-price-${index}`).value);
-            if (isNaN(newPrice) || newPrice < 0){ alert('Por favor ingresa un precio válido'); return; }
+            const val = document.getElementById(`edit-price-${index}`).value;
+            const newPrice = Number(val);
+            if (!Number.isFinite(newPrice) || newPrice < 0){
+                alert('Por favor ingresa un precio válido');
+                return;
+            }
             products[index].price = newPrice;
             editingPriceIndex = -1;
-            saveProductsToStorage(); // <<<<<< AHORA SE GUARDA CORRECTAMENTE
+            saveProductsToStorage();
             updateAdminProductsList();
             filteredProducts = [...products];
             generateCatalog();
             alert('Precio actualizado correctamente');
         }
-        
-        function cancelEditPrice(){ 
-            editingPriceIndex = -1; 
-            updateAdminProductsList(); 
+
+        function cancelEditPrice(){
+            editingPriceIndex = -1;
+            updateAdminProductsList();
         }
-        
+
         function deleteProduct(index){
             if (confirm(`¿Eliminar "${products[index].title}"?`)){
                 products.splice(index,1);
                 editingPriceIndex = -1;
-                saveProductsToStorage(); // <<<<<< AHORA SE GUARDA CORRECTAMENTE
+                saveProductsToStorage();
                 filteredProducts = [...products];
                 updateAdminProductsList();
                 generateCatalog();
                 alert('Producto eliminado correctamente');
             }
         }
-        
+
         function handlePinInput(){
             const inputs = document.querySelectorAll('.pin-digit');
             inputs.forEach((input,idx)=>{
@@ -652,11 +688,11 @@ Por favor, contáctenme para proceder con la compra. ¡Gracias!`;
         document.addEventListener('DOMContentLoaded', function(){
             // Carga persistente (si existe), si no, usa DEFAULT_PRODUCTS
             const loaded = loadProductsFromStorage();
-            if (!loaded || products.length === 0) { 
-                products = [...DEFAULT_PRODUCTS]; 
-                saveProductsToStorage(); 
+            if (!loaded || products.length === 0) {
+                products = [...DEFAULT_PRODUCTS];
+                saveProductsToStorage();
             }
-            
+
             filteredProducts = [...products];
             generateCatalog();
 
@@ -666,23 +702,31 @@ Por favor, contáctenme para proceder con la compra. ¡Gracias!`;
                 openLandingPage(urlProduct);
             }
 
-            // Event listeners
+            // Listeners principales
             document.getElementById('close-landing').addEventListener('click', closeLandingPage);
             document.getElementById('purchase-form').addEventListener('submit', submitForm);
             document.getElementById('customer-quantity').addEventListener('change', updateTotalPrice);
+
             document.getElementById('share-product-btn').addEventListener('click', function() {
                 if (currentProduct) shareProduct(currentProduct);
             });
-            document.getElementById('landing-page').addEventListener('click', function(e){ if(e.target===this){ closeLandingPage(); }});
 
+            // Cierre por click en fondo (opcional). Para evitar cierres accidentales, paramos propagación dentro de contenido.
+            document.getElementById('landing-page').addEventListener('click', function(e){ if(e.target===this){ closeLandingPage(); }});
+            document.getElementById('admin-panel').addEventListener('click', function(e){ if(e.target===this){ closeAdminPanel(); }});
+
+            // *** Anti-cierre accidental dentro de los contenedores ***
+            document.querySelector('.landing-content')?.addEventListener('click', (e)=> e.stopPropagation());
+            document.querySelector('.admin-content')?.addEventListener('click', (e)=> e.stopPropagation());
+
+            // Admin
             document.getElementById('admin-btn').addEventListener('click', openAdminPanel);
             document.getElementById('close-admin').addEventListener('click', closeAdminPanel);
             document.getElementById('verify-pin').addEventListener('click', verifyPin);
             document.getElementById('new-product-form').addEventListener('submit', addNewProduct);
-
             handlePinInput();
-            document.getElementById('admin-panel').addEventListener('click', function(e){ if(e.target===this){ closeAdminPanel(); }});
 
+            // Filtros
             document.getElementById('search-input').addEventListener('input', filterProducts);
             document.getElementById('price-filter').addEventListener('change', filterProducts);
         });
