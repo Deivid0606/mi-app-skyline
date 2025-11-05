@@ -617,7 +617,7 @@
         });
 
         // ===== Persistencia =====
-        const STORAGE_KEY = 'catalog_products_v2';
+        const STORAGE_KEY = 'catalog_products_v3'; // Cambiado a v3 para forzar recarga
 
         function saveProductsToStorage() {
             try {
@@ -648,7 +648,7 @@
             return false;
         }
 
-        // ===== Datos iniciales (por defecto) =====
+        // ===== Datos iniciales (por defecto) - CORREGIDOS =====
         const DEFAULT_PRODUCTS = [
             {"title":"MINI ASPIRADORA","sku":"ASP-001","price":129900,"image_url":"https://cdn.shopify.com/s/files/1/0885/3012/5095/files/ChatGPT_Image_9_ago_2025_09_49_46_p.m._ee0d4101-4eb8-45cf-9b23-e5e1d8c6288c.png?v=1755580613","description":"Mini aspiradora portátil y potente, ideal para limpiar espacios pequeños, el auto o lugares de difícil acceso. Con batería recargable y múltiples accesorios.","features":["Portátil y ligera","Batería recargable","Múltiples accesorios","Fácil de usar"]},
             {"title":"V-SHAPED - CINTA FACIAL","sku":"V-S-002","price":120000,"image_url":"https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Imagen_de_WhatsApp_2025-10-12_a_las_12.59.36_b6026cac.jpg?v=1760415021","description":"Cinta facial V-Shaped para lifting facial instantáneo. Ayuda a reducir la apariencia de arrugas y define el contorno facial.","features":["Lifting instantáneo","Reduce arrugas","Define contorno facial","Fácil aplicación"]},
@@ -679,9 +679,9 @@
             {"title":"Clip Nasal Anti-Ronquidos😴","sku":"CLIPNASAL-029","price":99000,"image_url":"https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Captura_de_pantalla_2025-10-16_085649.jpg?v=1760615829","description":"Clip nasal anti-ronquidos que mejora la respiración durante el sueño. Solución cómoda y efectiva para ronquidos leves.","features":["Anti-ronquidos","Mejora respiración","Cómodo","Efectivo"]},
             {"title":"ASIPIRADORA INTELIGENTE","sku":"ASPIRADORAINTE-29","price":279000,"image_url":"https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Imagen_de_WhatsApp_2025-10-16_a_las_11.11.48_140b0bd7.jpg?v=1760623973","description":"Aspiradora inteligente con navegación automática y aplicación móvil. Limpia tu hogar de forma autónoma y eficiente.","features":["Navegación automática","App móvil","Limpieza eficiente","Programable"]},
             {"title":"SECADOR DE ROPA PORTATIL","sku":"SECAPORT-030","price":299000,"image_url":"https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Captura_de_pantalla_2025-10-16_112112.jpg?v=1760624483","description":"Secador de ropa portátil, ideal para viajes o espacios pequeños. Secado rápido y eficiente sin ocupar mucho espacio.","features":["Portátil","Secado rápido","Compacto","Eficiente"]},
-            {"title":"🧹¡OFERTA ESPECIAL! Plumero Extensible de 2.80 m con descuento exclusivo 💥","sku":"Plumero Extensible de 2.80 m.","price":120000,"image_url":"https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Captura_de_pantalla_2025-10-30_005208.jpg?v=1762320213","description":"Llega a todos los rincones sin esfuerzo, Limpieza rápida y efectiva. Reutilizable y fácil de lavar","features":["Portátil","Limpieza eficiente","Compacto","Eficiente"]},
-            {"title":"Ducha Portátil Recargable Premium™","sku":"Portátil-ducha-001","price":220000,"image_url":"https://cdn.shopify.com/s/files/1/0885/3012/5095/files/Imagen_de_WhatsApp_2025-10-17_a_las_17.51.23_4c050991.jpg?v=1760734483","description":"Ducha portátil recargable premium para camping, playa o emergencias. Presión constante y fácil de transportar.","features":["Recargable","Presión constante","Portátil","Premium"]},
-            {"title":"Luz Navideña con Panel Solar","sku":"luzsolar-002","price":159900,"image_url":"https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Imagen_de_WhatsApp_2025-09-25_a_las_01.03.55_e8205f5b.jpg?v=1759102624","description":"Luces navideñas con panel solar para decoración ecológica. Automáticas y con múltiples modos de iluminación.","features":["Panel solar","Automáticas","Múltiples modos","Ecológicas"]}
+            {"title":"🧹¡OFERTA ESPECIAL! Plumero Extensible de 2.80 m con descuento exclusivo 💥","sku":"PLUMERO-031","price":120000,"image_url":"https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Captura_de_pantalla_2025-10-30_005208.jpg?v=1762320213","description":"Llega a todos los rincones sin esfuerzo, Limpieza rápida y efectiva. Reutilizable y fácil de lavar","features":["Extensible 2.80m","Limpieza eficiente","Reutilizable","Fácil de lavar"]},
+            {"title":"Ducha Portátil Recargable Premium™","sku":"DUCHA-032","price":220000,"image_url":"https://cdn.shopify.com/s/files/1/0885/3012/5095/files/Imagen_de_WhatsApp_2025-10-17_a_las_17.51.23_4c050991.jpg?v=1760734483","description":"Ducha portátil recargable premium para camping, playa o emergencias. Presión constante y fácil de transportar.","features":["Recargable","Presión constante","Portátil","Premium"]},
+            {"title":"Luz Navideña con Panel Solar","sku":"LUZNAVIDAD-033","price":159900,"image_url":"https://cdn.shopify.com/s/files/1/0707/1979/9484/files/Imagen_de_WhatsApp_2025-09-25_a_las_01.03.55_e8205f5b.jpg?v=1759102624","description":"Luces navideñas con panel solar para decoración ecológica. Automáticas y con múltiples modos de iluminación.","features":["Panel solar","Automáticas","Múltiples modos","Ecológicas"]}
         ];
 
         // ===== Config =====
@@ -1037,9 +1037,15 @@
             const bySku = new Map(products.map(p => [p.sku, p]));
             let added = 0;
             DEFAULT_PRODUCTS.forEach(def => {
-                if (!bySku.has(def.sku)) { products.push(def); added++; }
+                if (!bySku.has(def.sku)) { 
+                    products.push(def); 
+                    added++; 
+                }
             });
-            if (added > 0) { saveProductsToStorage(); console.log(`Se agregaron ${added} producto(s) faltante(s) desde DEFAULT_PRODUCTS.`); }
+            if (added > 0) { 
+                saveProductsToStorage(); 
+                console.log(`Se agregaron ${added} producto(s) faltante(s) desde DEFAULT_PRODUCTS.`); 
+            }
         }
 
         function maybeResetFromURL() {
@@ -1112,9 +1118,11 @@
 
             document.getElementById('search-input').addEventListener('input', filterProducts);
             document.getElementById('price-filter').addEventListener('change', filterProducts);
+            
+            // Debug: Mostrar productos cargados en consola
+            console.log("Productos cargados:", products);
+            console.log("Producto V-SHAPED:", products.find(p => p.sku === "V-S-002"));
         });
     </script>
 </body>
 </html>
-
-
