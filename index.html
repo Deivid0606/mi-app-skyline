@@ -7,53 +7,372 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        :root { --primary:#25D366; --primary-dark:#128C7E; --secondary:#FF6B6B; --accent:#FFD166; --dark:#333; --light:#f8f9fa; --gray:#6c757d; }
+        :root { 
+            --primary:#25D366; --primary-dark:#128C7E; --secondary:#FF6B6B; --accent:#FFD166; 
+            --dark:#333; --light:#f8f9fa; --gray:#6c757d; --success:#28a745; --warning:#ffc107;
+            --gradient: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
         body { background-color: var(--light); color: var(--dark); line-height: 1.6; }
-        header { background: linear-gradient(135deg,var(--primary),var(--primary-dark)); color:#fff; text-align:center; padding:2rem 1rem; box-shadow:0 4px 12px rgba(0,0,0,.1); position:relative; }
-        h1 { font-size:2.5rem; margin-bottom:.5rem; }
-        .subtitle { font-size:1.2rem; opacity:.9; }
-        .admin-btn{ position:absolute; top:1rem; right:1rem; background:rgba(255,255,255,.2); border:none; color:#fff; padding:.5rem 1rem; border-radius:5px; cursor:pointer; transition:background .3s; }
-        .admin-btn:hover{ background:rgba(255,255,255,.3); }
+        
+        /* Header mejorado */
+        header { 
+            background: var(--gradient); 
+            color:#fff; 
+            text-align:center; 
+            padding:2rem 1rem; 
+            box-shadow:0 4px 20px rgba(0,0,0,.15); 
+            position:relative; 
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.1;
+        }
+        h1 { font-size:2.5rem; margin-bottom:.5rem; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .subtitle { font-size:1.2rem; opacity:.9; margin-bottom: 1rem; }
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+        }
+        .admin-btn{ 
+            position:absolute; 
+            top:1rem; 
+            right:1rem; 
+            background:rgba(255,255,255,.2); 
+            border:none; 
+            color:#fff; 
+            padding:.5rem 1rem; 
+            border-radius:50px; 
+            cursor:pointer; 
+            transition:all .3s; 
+            backdrop-filter: blur(5px);
+            font-weight: 600;
+        }
+        .admin-btn:hover{ background:rgba(255,255,255,.3); transform: translateY(-2px); }
+        
         .container{ max-width:1200px; margin:2rem auto; padding:0 1rem; }
+        
+        /* Tarjetas de productos mejoradas */
         .products-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:2rem; }
-        .product-card{ background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 8px rgba(0,0,0,.1); transition:transform .3s ease, box-shadow .3s ease; cursor:pointer; }
-        .product-card:hover{ transform:translateY(-5px); box-shadow:0 8px 16px rgba(0,0,0,.15); }
-        .product-image-container{ width:100%; height:200px; overflow:hidden; display:flex; align-items:center; justify-content:center; background:#f9f9f9; }
-        .product-image{ width:100%; height:100%; object-fit:contain; padding:10px; }
+        .product-card{ 
+            background:#fff; 
+            border-radius:16px; 
+            overflow:hidden; 
+            box-shadow:0 6px 15px rgba(0,0,0,.08); 
+            transition:all .4s ease; 
+            cursor:pointer; 
+            position: relative;
+        }
+        .product-card:hover{ 
+            transform:translateY(-8px); 
+            box-shadow:0 12px 25px rgba(0,0,0,.15); 
+        }
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--secondary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        .product-image-container{ 
+            width:100%; 
+            height:200px; 
+            overflow:hidden; 
+            display:flex; 
+            align-items:center; 
+            justify-content:center; 
+            background:#f9f9f9; 
+            position: relative;
+        }
+        .product-image{ width:100%; height:100%; object-fit:contain; padding:10px; transition: transform .5s ease; }
+        .product-card:hover .product-image { transform: scale(1.05); }
         .product-info{ padding:1.5rem; }
         .product-title{ font-size:1.2rem; font-weight:600; margin-bottom:.5rem; color:var(--dark); height:3rem; overflow:hidden; }
         .product-price{ font-size:1.3rem; font-weight:700; color:var(--primary-dark); margin-bottom:.5rem; }
         .product-sku{ color:var(--gray); font-size:.9rem; margin-bottom:1rem; }
-        .whatsapp-btn{ display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:12px; background:var(--primary); color:#fff; border:none; border-radius:5px; font-size:1rem; font-weight:600; cursor:pointer; transition:background-color .3s ease; }
-        .whatsapp-btn:hover{ background:var(--primary-dark); }
-        .share-btn{ display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:10px; background:var(--gray); color:#fff; border:none; border-radius:5px; font-size:0.9rem; font-weight:600; cursor:pointer; transition:background-color .3s ease; margin-top: 8px; }
+        .whatsapp-btn{ 
+            display:flex; 
+            align-items:center; 
+            justify-content:center; 
+            gap:8px; 
+            width:100%; 
+            padding:14px; 
+            background:var(--gradient); 
+            color:#fff; 
+            border:none; 
+            border-radius:10px; 
+            font-size:1rem; 
+            font-weight:600; 
+            cursor:pointer; 
+            transition:all .3s ease; 
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+        }
+        .whatsapp-btn:hover{ 
+            background:var(--primary-dark); 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+        }
+        .share-btn{ 
+            display:flex; 
+            align-items:center; 
+            justify-content:center; 
+            gap:8px; 
+            width:100%; 
+            padding:12px; 
+            background:var(--gray); 
+            color:#fff; 
+            border:none; 
+            border-radius:8px; 
+            font-size:0.9rem; 
+            font-weight:600; 
+            cursor:pointer; 
+            transition:background-color .3s ease; 
+            margin-top: 8px; 
+        }
         .share-btn:hover{ background:#5a6268; }
-        .landing-page{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; z-index:1000; overflow-y:auto; padding:2rem; }
-        .landing-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; padding-bottom:1rem; border-bottom:1px solid #eee; }
-        .close-btn{ background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--gray); }
-        .landing-content{ display:flex; flex-wrap:wrap; gap:2rem; }
-        .landing-image-container{ flex:1; min-width:300px; max-width:500px; display:flex; align-items:center; justify-content:center; background:#f9f9f9; border-radius:10px; padding:20px; }
-        .landing-image{ width:100%; max-height:400px; object-fit:contain; }
+        
+        /* Landing Page mejorada */
+        .landing-page{ 
+            display:none; 
+            position:fixed; 
+            top:0; 
+            left:0; 
+            width:100%; 
+            height:100%; 
+            background:#fff; 
+            z-index:1000; 
+            overflow-y:auto; 
+            padding:0;
+        }
+        .landing-header{ 
+            display:flex; 
+            justify-content:space-between; 
+            align-items:center; 
+            margin-bottom:2rem; 
+            padding:1.5rem 2rem;
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .close-btn{ 
+            background:none; 
+            border:none; 
+            font-size:1.5rem; 
+            cursor:pointer; 
+            color:white;
+            transition: transform .3s;
+        }
+        .close-btn:hover { transform: rotate(90deg); }
+        .landing-content{ 
+            display:flex; 
+            flex-wrap:wrap; 
+            gap:2rem; 
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .landing-image-container{ 
+            flex:1; 
+            min-width:300px; 
+            max-width:500px; 
+            display:flex; 
+            align-items:center; 
+            justify-content:center; 
+            background:#f9f9f9; 
+            border-radius:16px; 
+            padding:20px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .landing-image{ width:100%; max-height:400px; object-fit:contain; border-radius: 8px; }
         .landing-details{ flex:1; min-width:300px; }
-        .landing-title{ font-size:2rem; margin-bottom:1rem; color:var(--dark); }
+        .landing-title{ font-size:2rem; margin-bottom:1rem; color:var(--dark); font-weight: 700; }
         .landing-price{ font-size:1.8rem; font-weight:700; color:var(--primary-dark); margin-bottom:.5rem; }
         .landing-sku{ color:var(--gray); margin-bottom:1.5rem; }
-        .landing-description{ margin-bottom:2rem; line-height:1.8; }
+        .landing-description{ 
+            margin-bottom:2rem; 
+            line-height:1.8; 
+            font-size: 1.1rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
         .features{ margin-bottom:2rem; }
-        .features h3{ margin-bottom:1rem; }
+        .features h3{ margin-bottom:1rem; color: var(--dark); font-weight: 600; }
         .features ul{ list-style-type:none; }
-        .features li{ margin-bottom:.5rem; display:flex; align-items:center; }
-        .features li:before{ content:"✓"; color:var(--primary); font-weight:bold; margin-right:.5rem; }
-        .purchase-form{ background:#f8f9fa; padding:2rem; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,.05); }
-        .form-title{ margin-bottom:1.5rem; color:var(--dark); }
+        .features li{ 
+            margin-bottom:.8rem; 
+            display:flex; 
+            align-items:center; 
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .features li:before{ 
+            content:"✓"; 
+            color:var(--success); 
+            font-weight:bold; 
+            margin-right:.8rem; 
+            font-size: 1.2rem;
+        }
+        
+        /* Formulario mejorado */
+        .purchase-form{ 
+            background:#fff; 
+            padding:2rem; 
+            border-radius:16px; 
+            box-shadow:0 8px 25px rgba(0,0,0,.08);
+            border: 1px solid #eaeaea;
+            position: relative;
+        }
+        .form-title{ 
+            margin-bottom:1.5rem; 
+            color:var(--dark); 
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .form-title::before {
+            content: '';
+            display: block;
+            width: 6px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
         .form-group{ margin-bottom:1.5rem; }
-        .form-group label{ display:block; margin-bottom:.5rem; font-weight:500; }
-        .form-control{ width:100%; padding:12px; border:1px solid #ddd; border-radius:5px; font-size:1rem; }
+        .form-group label{ display:block; margin-bottom:.5rem; font-weight:600; color: #444; }
+        .form-control{ 
+            width:100%; 
+            padding:14px; 
+            border:2px solid #e0e0e0; 
+            border-radius:10px; 
+            font-size:1rem; 
+            transition: all .3s;
+        }
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.2);
+            outline: none;
+        }
         .form-row{ display:flex; gap:1rem; }
         .form-row .form-group{ flex:1; }
-        .total-price{ background:var(--accent); padding:1rem; border-radius:5px; margin:1.5rem 0; text-align:center; font-size:1.2rem; font-weight:700; }
-        .submit-btn{ display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:14px; background:var(--primary); color:#fff; border:none; border-radius:5px; font-size:1.1rem; font-weight:600; cursor:pointer; transition:background-color .3s ease; }
-        .submit-btn:hover{ background:var(--primary-dark); }
+        .total-price{ 
+            background:var(--accent); 
+            padding:1.2rem; 
+            border-radius:10px; 
+            margin:1.5rem 0; 
+            text-align:center; 
+            font-size:1.3rem; 
+            font-weight:700; 
+            color: #333;
+            box-shadow: 0 4px 8px rgba(255, 209, 102, 0.3);
+        }
+        .submit-btn{ 
+            display:flex; 
+            align-items:center; 
+            justify-content:center; 
+            gap:8px; 
+            width:100%; 
+            padding:16px; 
+            background:var(--gradient); 
+            color:#fff; 
+            border:none; 
+            border-radius:10px; 
+            font-size:1.1rem; 
+            font-weight:600; 
+            cursor:pointer; 
+            transition:all .3s ease;
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+            margin-bottom: 1rem;
+        }
+        .submit-btn:hover{ 
+            background:var(--primary-dark); 
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.5);
+        }
+        .urgency-banner {
+            background: var(--secondary);
+            color: white;
+            padding: 0.8rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 107, 107, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0); }
+        }
+        .trust-section {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eaeaea;
+        }
+        .trust-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.5rem;
+        }
+        .trust-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        .trust-text {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        .share-btn{ 
+            display:flex; 
+            align-items:center; 
+            justify-content:center; 
+            gap:8px; 
+            width:100%; 
+            padding:12px; 
+            background:var(--gray); 
+            color:#fff; 
+            border:none; 
+            border-radius:8px; 
+            font-size:0.9rem; 
+            font-weight:600; 
+            cursor:pointer; 
+            transition:background-color .3s ease; 
+            margin-top: 8px; 
+        }
+        .share-btn:hover{ background:#5a6268; }
+        
+        /* Resto del CSS se mantiene igual */
         .admin-panel{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.8); z-index:2000; justify-content:center; align-items:center; }
         .admin-content{ background:#fff; padding:2rem; border-radius:10px; width:90%; max-width:900px; max-height:90vh; overflow-y:auto; }
         .admin-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; padding-bottom:1rem; border-bottom:1px solid #eee; }
@@ -83,18 +402,22 @@
         @media (max-width:768px){
             .products-grid{ grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:1.5rem; }
             h1{ font-size:2rem; }
-            .landing-content{ flex-direction:column; }
+            .landing-content{ flex-direction:column; padding: 1rem; }
+            .landing-header { padding: 1rem; }
             .form-row{ flex-direction:column; gap:0; }
             .admin-btn{ position:static; margin-top:1rem; }
             .product-item{ flex-direction:column; align-items:flex-start; gap:1rem; }
             .admin-buttons{ width:100%; justify-content:flex-end; }
             .search-container{ flex-direction:column; }
+            .trust-badges { gap: 0.5rem; }
+            .badge { font-size: 0.8rem; padding: 0.4rem 0.8rem; }
         }
         @media (max-width:480px){
             .products-grid{ grid-template-columns:1fr; }
             h1{ font-size:1.8rem; }
-            .landing-page{ padding:1rem; }
+            .landing-page{ padding:0; }
             .pin-input input{ width:40px; height:40px; }
+            .trust-section { flex-direction: column; gap: 1rem; }
         }
         .danger-btn{ background: var(--secondary); color:#fff; border:none; padding:.5rem 1rem; border-radius:6px; font-weight:600; }
     </style>
@@ -103,6 +426,11 @@
     <header>
         <h1>Catálogo de Productos</h1>
         <p class="subtitle">Consulta por cualquiera de nuestros productos por WhatsApp</p>
+        <div class="trust-badges">
+            <div class="badge"><i class="fas fa-shipping-fast"></i> Envíos a todo el país</div>
+            <div class="badge"><i class="fas fa-lock"></i> Pago seguro</div>
+            <div class="badge"><i class="fas fa-headset"></i> Soporte 24/7</div>
+        </div>
         <button class="admin-btn" id="admin-btn"><i class="fas fa-cog"></i> Administrar</button>
     </header>
 
@@ -118,7 +446,7 @@
         <div class="products-grid" id="products-container"></div>
     </div>
 
-    <!-- Landing Page -->
+    <!-- Landing Page Mejorada -->
     <div class="landing-page" id="landing-page">
         <div class="landing-header">
             <h2 id="landing-product-title">Nombre del Producto</h2>
@@ -132,21 +460,28 @@
                 <h3 class="landing-title" id="landing-product-name">Nombre del Producto</h3>
                 <p class="landing-price" id="landing-product-price">Gs. 0</p>
                 <p class="landing-sku" id="landing-product-sku">SKU: XXX-XXX</p>
+                
+                <div class="urgency-banner">
+                    <i class="fas fa-bolt"></i> ¡Oferta especial! Solo quedan 5 unidades
+                </div>
+                
                 <div class="landing-description" id="landing-product-description"></div>
                 <div class="features">
                     <h3>Características principales:</h3>
                     <ul id="landing-product-features"></ul>
                 </div>
+                
                 <div class="purchase-form">
                     <h3 class="form-title">Completa el formulario para comprar</h3>
+                    
                     <form id="purchase-form">
                         <div class="form-group">
                             <label for="customer-name">Nombre y Apellido</label>
-                            <input type="text" id="customer-name" class="form-control" required>
+                            <input type="text" id="customer-name" class="form-control" required placeholder="Ej: María González">
                         </div>
                         <div class="form-group">
                             <label for="customer-phone">Teléfono</label>
-                            <input type="tel" id="customer-phone" class="form-control" required>
+                            <input type="tel" id="customer-phone" class="form-control" required placeholder="Ej: 0981 123 456">
                         </div>
                         <div class="form-group">
                             <label for="customer-quantity">Cantidad</label>
@@ -168,27 +503,46 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="customer-address">Dirección de envío</label>
-                                <input type="text" id="customer-address" class="form-control" required>
+                                <input type="text" id="customer-address" class="form-control" required placeholder="Ej: Av. España 1234">
                             </div>
                             <div class="form-group">
                                 <label for="customer-city">Ciudad</label>
-                                <input type="text" id="customer-city" class="form-control" required>
+                                <input type="text" id="customer-city" class="form-control" required placeholder="Ej: Asunción">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="customer-message">Mensaje adicional (opcional)</label>
-                            <textarea id="customer-message" class="form-control" rows="3"></textarea>
+                            <textarea id="customer-message" class="form-control" rows="3" placeholder="Ej: ¿Tienen disponible en otro color?"></textarea>
                         </div>
                         <div class="total-price" id="total-price">Total a pagar: Gs. 0</div>
-                        <button type="submit" class="submit-btn"><i class="fab fa-whatsapp"></i> Enviar pedido por WhatsApp</button>
-                        <button type="button" class="share-btn" id="share-product-btn"><i class="fas fa-share-alt"></i> Compartir este producto</button>
+                        <button type="submit" class="submit-btn">
+                            <i class="fab fa-whatsapp"></i> Comprar ahora por WhatsApp
+                        </button>
+                        <button type="button" class="share-btn" id="share-product-btn">
+                            <i class="fas fa-share-alt"></i> Compartir este producto
+                        </button>
                     </form>
+                    
+                    <div class="trust-section">
+                        <div class="trust-item">
+                            <i class="fas fa-shield-alt trust-icon"></i>
+                            <span class="trust-text">Pago seguro</span>
+                        </div>
+                        <div class="trust-item">
+                            <i class="fas fa-truck trust-icon"></i>
+                            <span class="trust-text">Envío gratis</span>
+                        </div>
+                        <div class="trust-item">
+                            <i class="fas fa-undo trust-icon"></i>
+                            <span class="trust-text">Devolución fácil</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Admin Panel -->
+    <!-- Admin Panel (sin cambios) -->
     <div class="admin-panel" id="admin-panel">
         <div class="admin-content">
             <div class="admin-header">
@@ -428,7 +782,13 @@
                 const productCard = document.createElement('div');
                 productCard.className = 'product-card';
                 const imageUrl = product.image_url || 'https://via.placeholder.com/300x200?text=Imagen+No+Disponible';
+                
+                // Añadir badge de oferta para algunos productos
+                const hasBadge = Math.random() > 0.7; // 30% de productos tendrán badge
+                const badgeText = hasBadge ? (Math.random() > 0.5 ? '¡Oferta!' : '¡Nuevo!') : '';
+                
                 productCard.innerHTML = `
+                    ${hasBadge ? `<div class="product-badge">${badgeText}</div>` : ''}
                     <div class="product-image-container">
                         <img src="${imageUrl}" alt="${product.title}" class="product-image"
                              onerror="this.src='https://via.placeholder.com/300x200?text=Error+al+cargar+imagen'">
@@ -488,6 +848,9 @@
             updateTotalPrice();
             document.getElementById('landing-page').style.display='block';
             document.body.style.overflow='hidden';
+            
+            // Scroll al inicio de la landing
+            window.scrollTo(0, 0);
         }
 
         function updateTotalPrice(){
@@ -753,5 +1116,3 @@
     </script>
 </body>
 </html>
-
-
