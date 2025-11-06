@@ -6,7 +6,6 @@
     <title>Catálogo de Productos Premium</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Estilos optimizados - se mantienen iguales */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         :root { 
             --primary:#25D366; --primary-dark:#128C7E; --secondary:#FF6B6B; --accent:#FFD166; 
@@ -1690,6 +1689,57 @@
             return Date.now().toString(36) + Math.random().toString(36).substr(2);
         }
 
+        // ===== Sistema de URLs para compartir productos =====
+        function getProductFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productSku = urlParams.get('product');
+            
+            if (productSku) {
+                const product = products.find(p => p.sku === productSku);
+                if (product) {
+                    // Abrir directamente la landing page del producto
+                    setTimeout(() => {
+                        openLandingPage(product);
+                    }, 500);
+                    
+                    // Limpiar la URL para que no se siga mostrando el parámetro
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+            }
+        }
+
+        function shareProduct(product) {
+            // Crear URL con parámetro del producto
+            const productUrl = `${window.location.origin}${window.location.pathname}?product=${encodeURIComponent(product.sku)}`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: product.title,
+                    text: product.description,
+                    url: productUrl
+                }).catch(err => {
+                    console.log('Error al compartir:', err);
+                    copyToClipboard(productUrl);
+                });
+            } else {
+                copyToClipboard(productUrl);
+            }
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('¡Enlace copiado al portapapeles! Puedes compartirlo ahora.');
+            }).catch(err => {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('¡Enlace copiado al portapapeles! Puedes compartirlo ahora.');
+            });
+        }
+
         // ===== Sistema de productos =====
         function filterAndSortProducts(){
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
@@ -1870,36 +1920,6 @@
             window.open(link, '_blank');
             
             setTimeout(() => { closeLandingPage(); alert('¡Gracias por tu pedido! Te contactaremos pronto por WhatsApp.'); }, 1000);
-        }
-
-        function shareProduct(product) {
-            const productUrl = `${window.location.origin}${window.location.pathname}?product=${encodeURIComponent(product.sku)}`;
-            if (navigator.share) {
-                navigator.share({
-                    title: product.title,
-                    text: product.description,
-                    url: productUrl
-                }).catch(err => {
-                    console.log('Error al compartir:', err);
-                    copyToClipboard(productUrl);
-                });
-            } else {
-                copyToClipboard(productUrl);
-            }
-        }
-
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                alert('¡Enlace copiado al portapapeles! Puedes compartirlo ahora.');
-            }).catch(err => {
-                const textArea = document.createElement('textarea');
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                alert('¡Enlace copiado al portapapeles! Puedes compartirlo ahora.');
-            });
         }
 
         // ===== Funciones de Administración =====
@@ -2157,6 +2177,9 @@
                 products.forEach((product, index) => {
                     console.log(`${index + 1}. ${product.title} (${product.sku})`);
                 });
+
+                // Verificar si hay un producto en la URL
+                getProductFromURL();
             }, 500);
 
             // Listeners principales
