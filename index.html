@@ -586,6 +586,291 @@
             transform: translateY(-3px);
         }
         
+        /* Panel de Administración */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+        .admin-content {
+            background: white;
+            border-radius: 16px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .admin-title {
+            font-size: 1.8rem;
+            color: var(--dark);
+            font-weight: 700;
+        }
+        .admin-close {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .admin-close:hover {
+            background: #e55c5c;
+            transform: rotate(90deg);
+        }
+        .admin-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .admin-tab {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+        .admin-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        .admin-tab:hover {
+            color: var(--primary-dark);
+        }
+        .admin-section {
+            display: none;
+        }
+        .admin-section.active {
+            display: block;
+        }
+        .products-list {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .product-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+        .product-item:hover {
+            background: #e9ecef;
+        }
+        .product-item-img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: white;
+            padding: 5px;
+        }
+        .product-item-info {
+            flex: 1;
+        }
+        .product-item-title {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+        .product-item-sku {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        .product-item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .btn-edit {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-edit:hover {
+            background: var(--primary-dark);
+        }
+        .btn-delete {
+            background: var(--secondary);
+            color: white;
+        }
+        .btn-delete:hover {
+            background: #e55c5c;
+        }
+        .btn-add {
+            background: var(--success);
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .btn-add:hover {
+            background: #23923d;
+        }
+        .form-edit {
+            display: grid;
+            gap: 1.5rem;
+        }
+        .form-edit .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .form-edit textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .form-edit .features-input {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .features-list {
+            margin-top: 1rem;
+        }
+        .feature-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+        }
+        .feature-remove {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+        }
+        .btn-cancel {
+            background: var(--gray);
+            color: white;
+        }
+        .btn-cancel:hover {
+            background: #5a6268;
+        }
+        .btn-save {
+            background: var(--success);
+            color: white;
+        }
+        .btn-save:hover {
+            background: #23923d;
+        }
+        
+        /* Testimonios */
+        .testimonials {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 16px;
+        }
+        .testimonials-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            color: var(--dark);
+        }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .testimonial-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .testimonial-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        .testimonial-name {
+            font-weight: 600;
+        }
+        .testimonial-rating {
+            color: var(--accent);
+            margin-top: 0.2rem;
+        }
+        
+        /* Stock counter */
+        .stock-counter {
+            display: inline-block;
+            background: #ffebee;
+            color: #d32f2f;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 1rem;
+        }
+        
         /* Responsive */
         @media (max-width:768px){
             .products-grid{ grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:1.5rem; }
@@ -606,12 +891,24 @@
             .sort-container {
                 justify-content: center;
             }
+            .form-edit .form-row {
+                grid-template-columns: 1fr;
+            }
+            .admin-panel {
+                padding: 1rem;
+            }
+            .admin-content {
+                padding: 1.5rem;
+            }
         }
         @media (max-width:480px){
             .products-grid{ grid-template-columns:1fr; }
             h1{ font-size:1.8rem; }
             .landing-page{ padding:0; }
             .trust-section { flex-direction: column; gap: 1rem; }
+            .admin-tabs {
+                flex-wrap: wrap;
+            }
         }
         
         /* Animaciones adicionales */
@@ -670,6 +967,43 @@
             </div>
         </div>
         <div class="products-grid" id="products-container"></div>
+        
+        <!-- Sección de testimonios -->
+        <div class="testimonials">
+            <h2 class="testimonials-title">Lo que dicen nuestros clientes</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Excelente calidad y atención. El producto llegó antes de lo esperado y superó mis expectativas."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">M</div>
+                        <div>
+                            <div class="testimonial-name">María González</div>
+                            <div class="testimonial-rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Muy contento con mi compra. El producto es exactamente como se muestra en las fotos y funciona perfectamente."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">C</div>
+                        <div>
+                            <div class="testimonial-name">Carlos Rodríguez</div>
+                            <div class="testimonial-rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"La atención al cliente es increíble. Me ayudaron a elegir el producto perfecto para mis necesidades."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">A</div>
+                        <div>
+                            <div class="testimonial-name">Ana Martínez</div>
+                            <div class="testimonial-rating">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Landing Page Mejorada -->
@@ -688,7 +1022,7 @@
                 <p class="landing-sku" id="landing-product-sku">SKU: XXX-XXX</p>
                 
                 <div class="urgency-banner">
-                    <i class="fas fa-bolt"></i> ¡Oferta especial! Solo quedan 5 unidades
+                    <i class="fas fa-bolt"></i> ¡Oferta especial! Solo quedan <span id="stock-count">5</span> unidades
                 </div>
                 
                 <div class="landing-description" id="landing-product-description"></div>
@@ -768,6 +1102,118 @@
         </div>
     </div>
 
+    <!-- Panel de Administración -->
+    <div class="admin-panel" id="admin-panel">
+        <div class="admin-content">
+            <div class="admin-header">
+                <h2 class="admin-title">Panel de Administración</h2>
+                <button class="admin-close" id="admin-close"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="products-list">Lista de Productos</button>
+                <button class="admin-tab" data-tab="product-edit">Editar Producto</button>
+                <button class="admin-tab" data-tab="product-add">Agregar Producto</button>
+            </div>
+            
+            <div class="admin-section active" id="products-list">
+                <button class="btn btn-add" id="add-product-btn">
+                    <i class="fas fa-plus"></i> Agregar Nuevo Producto
+                </button>
+                <div class="products-list" id="admin-products-list"></div>
+            </div>
+            
+            <div class="admin-section" id="product-edit">
+                <h3>Editar Producto</h3>
+                <form class="form-edit" id="edit-product-form">
+                    <input type="hidden" id="edit-product-id">
+                    <div class="form-group">
+                        <label for="edit-title">Título del Producto</label>
+                        <input type="text" id="edit-title" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-sku">SKU</label>
+                        <input type="text" id="edit-sku" class="form-control" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="edit-price">Precio (Gs.)</label>
+                            <input type="number" id="edit-price" class="form-control" required min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-category">Categoría</label>
+                            <input type="text" id="edit-category" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-image">URL de la Imagen</label>
+                        <input type="url" id="edit-image" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-description">Descripción</label>
+                        <textarea id="edit-description" class="form-control" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Características</label>
+                        <div class="features-input">
+                            <input type="text" id="new-feature" class="form-control" placeholder="Nueva característica">
+                            <button type="button" class="btn btn-edit" id="add-feature">Agregar</button>
+                        </div>
+                        <div class="features-list" id="edit-features-list"></div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-cancel" id="cancel-edit">Cancelar</button>
+                        <button type="submit" class="btn btn-save">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="admin-section" id="product-add">
+                <h3>Agregar Nuevo Producto</h3>
+                <form class="form-edit" id="add-product-form">
+                    <div class="form-group">
+                        <label for="add-title">Título del Producto</label>
+                        <input type="text" id="add-title" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-sku">SKU</label>
+                        <input type="text" id="add-sku" class="form-control" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="add-price">Precio (Gs.)</label>
+                            <input type="number" id="add-price" class="form-control" required min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="add-category">Categoría</label>
+                            <input type="text" id="add-category" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-image">URL de la Imagen</label>
+                        <input type="url" id="add-image" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-description">Descripción</label>
+                        <textarea id="add-description" class="form-control" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Características</label>
+                        <div class="features-input">
+                            <input type="text" id="add-new-feature" class="form-control" placeholder="Nueva característica">
+                            <button type="button" class="btn btn-edit" id="add-new-feature-btn">Agregar</button>
+                        </div>
+                        <div class="features-list" id="add-features-list"></div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-cancel" id="cancel-add">Cancelar</button>
+                        <button type="submit" class="btn btn-save">Agregar Producto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <button class="scroll-top" id="scroll-top">
         <i class="fas fa-chevron-up"></i>
     </button>
@@ -782,6 +1228,7 @@
         // ===== DATOS COMPLETOS DE TUS PRODUCTOS =====
         const DEFAULT_PRODUCTS = [
             {
+                "id": "1",
                 "title": "MINI ASPIRADORA",
                 "sku": "ASP-001",
                 "price": 129900,
@@ -789,9 +1236,11 @@
                 "description": "Mini aspiradora portátil y potente, ideal para limpiar espacios pequeños, el auto o lugares de difícil acceso. Con batería recargable y múltiples accesorios.",
                 "features": ["Portátil y ligera", "Batería recargable", "Múltiples accesorios", "Fácil de usar"],
                 "category": "Hogar",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 15
             },
             {
+                "id": "2",
                 "title": "V-SHAPED - CINTA FACIAL",
                 "sku": "V-S-002",
                 "price": 120000,
@@ -799,9 +1248,11 @@
                 "description": "Cinta facial V-Shaped para lifting facial instantáneo. Ayuda a reducir la apariencia de arrugas y define el contorno facial.",
                 "features": ["Lifting instantáneo", "Reduce arrugas", "Define contorno facial", "Fácil aplicación"],
                 "category": "Belleza",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 8
             },
             {
+                "id": "3",
                 "title": "NIVELADORAS X 4",
                 "sku": "NIVE-003",
                 "price": 99000,
@@ -809,9 +1260,11 @@
                 "description": "Set de 4 niveladoras profesionales para trabajos de construcción y bricolaje. Precisión garantizada y fácil de usar.",
                 "features": ["Set de 4 unidades", "Precisión profesional", "Duraderas", "Para múltiples usos"],
                 "category": "Herramientas",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 22
             },
             {
+                "id": "4",
                 "title": "PLANTILLA ORTOPÉDICA | ORTOFLEX 5D®",
                 "sku": "ORTOPIEX-004",
                 "price": 159000,
@@ -819,9 +1272,11 @@
                 "description": "Plantillas ortopédicas Ortoflex 5D con tecnología de amortiguación avanzada. Alivian el dolor de pies y espalda, mejorando la postura.",
                 "features": ["Tecnología 5D", "Amortiguación avanzada", "Alivia dolores", "Mejora postura"],
                 "category": "Salud",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 12
             },
             {
+                "id": "5",
                 "title": "MINI CAMARA SPY",
                 "sku": "SPY-005",
                 "price": 179000,
@@ -829,9 +1284,11 @@
                 "description": "Mini cámara espía de alta definición, discreta y fácil de ocultar. Ideal para seguridad doméstica o vigilancia.",
                 "features": ["Alta definición", "Discreta", "Fácil de ocultar", "Batería de larga duración"],
                 "category": "Seguridad",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 5
             },
             {
+                "id": "6",
                 "title": "LINTERNA POTENTE CON ZOOM",
                 "sku": "LINT-006",
                 "price": 189000,
@@ -839,9 +1296,11 @@
                 "description": "Linterna potente con zoom ajustable, ideal para camping, emergencias o trabajos de precisión. Alcance de hasta 500 metros.",
                 "features": ["Zoom ajustable", "Alcance 500m", "Resistente al agua", "Batería recargable"],
                 "category": "Outdoor",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 18
             },
             {
+                "id": "7",
                 "title": "COMBO DE PERFUMES / ONE MILLION / 212",
                 "sku": "PEFUM-007",
                 "price": 369000,
@@ -849,9 +1308,11 @@
                 "description": "Combo exclusivo de perfumes One Million y 212. Fragancias duraderas y elegantes para ocasiones especiales.",
                 "features": ["Fragancias exclusivas", "Duraderas", "Elegantes", "Combo especial"],
                 "category": "Belleza",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 7
             },
             {
+                "id": "8",
                 "title": "SOPORTE REGULABLE PARA ELECTRODOMESTICOS",
                 "sku": "SOP-008",
                 "price": 145000,
@@ -859,9 +1320,11 @@
                 "description": "Soporte regulable para electrodomésticos, ideal para microondas, air fryers y otros dispositivos de cocina. Ahorra espacio y organiza tu cocina.",
                 "features": ["Regulable", "Ahorra espacio", "Fácil instalación", "Material resistente"],
                 "category": "Hogar",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 25
             },
             {
+                "id": "9",
                 "title": "PISTOLA MASAJEADORA",
                 "sku": "PIS-010",
                 "price": 169000,
@@ -869,9 +1332,11 @@
                 "description": "Pistola masajeadora profesional para aliviar tensiones musculares. Múltiples cabezales y velocidades para un masaje personalizado.",
                 "features": ["Profesional", "Múltiples cabezales", "Velocidades ajustables", "Alivia tensiones"],
                 "category": "Salud",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 14
             },
             {
+                "id": "10",
                 "title": "CORRECTOR DE POSTURA X",
                 "sku": "CORREC-011",
                 "price": 179000,
@@ -879,9 +1344,11 @@
                 "description": "Corrector de postura ergonómico que ayuda a mantener una postura correcta durante el día. Ideal para personas que trabajan sentadas.",
                 "features": ["Ergonómico", "Ajustable", "Material transpirable", "Mejora postura"],
                 "category": "Salud",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 9
             },
             {
+                "id": "11",
                 "title": "💙🦶 Pack Bienestar: 2 Pares de Medias Terapéuticas",
                 "sku": "MEDIA-012",
                 "price": 120000,
@@ -889,9 +1356,11 @@
                 "description": "Pack de 2 pares de medias terapéuticas que mejoran la circulación y reducen la fatiga en los pies. Ideales para uso diario.",
                 "features": ["Mejora circulación", "Reduce fatiga", "Pack de 2 pares", "Material transpirable"],
                 "category": "Salud",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 20
             },
             {
+                "id": "12",
                 "title": "COMBO DIOSA",
                 "sku": "COMBO-DIOSA-013",
                 "price": 295000,
@@ -899,9 +1368,11 @@
                 "description": "Combo Diosa con productos de belleza y cuidado personal seleccionados para realzar tu belleza natural.",
                 "features": ["Productos seleccionados", "Cuidado personal", "Realza belleza", "Combo exclusivo"],
                 "category": "Belleza",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 6
             },
             {
+                "id": "13",
                 "title": "Mini GPS con imán y batería ✨ Geo Ultra",
                 "sku": "GPS-014",
                 "price": 185000,
@@ -909,9 +1380,11 @@
                 "description": "Mini GPS con imán incorporado y batería de larga duración. Ideal para localizar objetos importantes o mascotas.",
                 "features": ["Con imán", "Batería larga duración", "Aplicación móvil", "Localización en tiempo real"],
                 "category": "Tecnología",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 11
             },
             {
+                "id": "14",
                 "title": "KIT PERFUMES: ONE MILLON, BLUE, SAUVAGE",
                 "sku": "SAUVAGE-015",
                 "price": 369000,
@@ -919,9 +1392,11 @@
                 "description": "Kit de perfumes con las fragancias One Million, Blue y Sauvage. Tres opciones para diferentes ocasiones y estilos.",
                 "features": ["Tres fragancias", "Para diferentes ocasiones", "Elegantes", "Duraderas"],
                 "category": "Belleza",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 8
             },
             {
+                "id": "15",
                 "title": "Corte Fino/ Afilador de Cuchillos y Tijeras🔪✂️",
                 "sku": "AFI-016",
                 "price": 109000,
@@ -929,9 +1404,11 @@
                 "description": "Afilador profesional para cuchillos y tijeras. Mantén tus herramientas de corte siempre afiladas y listas para usar.",
                 "features": ["Para cuchillos y tijeras", "Fácil de usar", "Resultados profesionales", "Seguro"],
                 "category": "Hogar",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 30
             },
             {
+                "id": "16",
                 "title": "COMBO PERFUMES X2 BAD BOY + INVICTUS",
                 "sku": "BADBOY-017",
                 "price": 369000,
@@ -939,9 +1416,11 @@
                 "description": "Combo de perfumes Bad Boy e Invictus. Fragancias masculinas intensas y seductoras para el hombre moderno.",
                 "features": ["Fragancias masculinas", "Intensas", "Seductoras", "Combo especial"],
                 "category": "Belleza",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 5
             },
             {
+                "id": "17",
                 "title": "CREMA PARA HONGO",
                 "sku": "HONGO-018",
                 "price": 120000,
@@ -949,9 +1428,11 @@
                 "description": "Crema antifúngica efectiva para el tratamiento de hongos en la piel. Fórmula clínicamente probada para resultados rápidos.",
                 "features": ["Antifúngica", "Resultados rápidos", "Fórmula probada", "Fácil aplicación"],
                 "category": "Salud",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 25
             },
             {
+                "id": "18",
                 "title": "PLANTILLA NAFOING",
                 "sku": "NAF-019",
                 "price": 129900,
@@ -959,9 +1440,11 @@
                 "description": "Plantillas NAFOING con tecnología de amortiguación y soporte arqueado. Ideales para el confort diario y la salud de tus pies.",
                 "features": ["Amortiguación avanzada", "Soporte arqueado", "Confort diario", "Material de calidad"],
                 "category": "Salud",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 18
             },
             {
+                "id": "19",
                 "title": "HIDROLAVADORA PORTATIL",
                 "sku": "HIDRO-020",
                 "price": 295000,
@@ -969,9 +1452,11 @@
                 "description": "Hidrolavadora portátil con potencia profesional. Ideal para limpiar autos, bicicletas, muebles y más. Fácil de transportar y usar.",
                 "features": ["Portátil", "Potencia profesional", "Fácil de usar", "Múltiples usos"],
                 "category": "Hogar",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 4
             },
             {
+                "id": "20",
                 "title": "LUCES NAVIDEÑAS COLORIDAS CON PANEL SOLAR 20 METROS BLANCO",
                 "sku": "LUCNAVI-021",
                 "price": 159900,
@@ -979,9 +1464,11 @@
                 "description": "Luces navideñas coloridas de 20 metros con panel solar. Decoración ecológica y económica para tus fiestas.",
                 "features": ["Panel solar", "20 metros de longitud", "Colores vibrantes", "Ecológico"],
                 "category": "Hogar",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 15
             },
             {
+                "id": "21",
                 "title": "PARLANTE TIPO JBL G4",
                 "sku": "JBL-022",
                 "price": 620000,
@@ -989,9 +1476,11 @@
                 "description": "Parlante Bluetooth tipo JBL G4 con sonido de alta calidad y batería de larga duración. Ideal para fiestas y reuniones.",
                 "features": ["Sonido de alta calidad", "Batería larga duración", "Bluetooth", "Diseño portátil"],
                 "category": "Electrónica",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 3
             },
             {
+                "id": "22",
                 "title": "SUPER COMBO 3x1 de Perfumes para Mujeres 30ML🌸",
                 "sku": "PER30ML-023",
                 "price": 269000,
@@ -999,9 +1488,11 @@
                 "description": "Super combo 3x1 de perfumes para mujeres en presentación de 30ml. Tres fragancias elegantes y femeninas en un solo pack.",
                 "features": ["Tres fragancias", "Presentación 30ml", "Elegantes", "Femeninas"],
                 "category": "Belleza",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 10
             },
             {
+                "id": "23",
                 "title": "RoyalBee Wax CERA PARA MADERA Y CUERO✨",
                 "sku": "BEEWAS-024",
                 "price": 120000,
@@ -1009,9 +1500,11 @@
                 "description": "Cera RoyalBee para el cuidado y protección de madera y cuero. Restaura el brillo natural y protege contra el desgaste.",
                 "features": ["Para madera y cuero", "Restaura brillo", "Protege del desgaste", "Fácil aplicación"],
                 "category": "Hogar",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 22
             },
             {
+                "id": "24",
                 "title": "Lampara Solar + kit De Herramienta",
                 "sku": "LINKINT-025",
                 "price": 169000,
@@ -1019,9 +1512,11 @@
                 "description": "Lámpara solar con kit de herramientas incluido. Iluminación ecológica y herramientas básicas para el hogar.",
                 "features": ["Energía solar", "Kit de herramientas", "Ecológica", "Práctica"],
                 "category": "Herramientas",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 12
             },
             {
+                "id": "25",
                 "title": "SOMBRILLA PARA AUTOMÓVILES",
                 "sku": "SOMBRI-026",
                 "price": 120000,
@@ -1029,9 +1524,11 @@
                 "description": "Sombrilla para automóviles que protege el interior del calor solar. Mantiene tu auto fresco y previene el desgaste de los interiores.",
                 "features": ["Protección solar", "Mantiene fresco", "Fácil de instalar", "Tamaño universal"],
                 "category": "Automotriz",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 28
             },
             {
+                "id": "26",
                 "title": "IRRIGADOR BUCAL",
                 "sku": "IRRI-027",
                 "price": 320000,
@@ -1039,9 +1536,11 @@
                 "description": "Irrigador bucal para una limpieza dental profunda. Elimina restos de comida y placa bacteriana de lugares difíciles de alcanzar.",
                 "features": ["Limpieza profunda", "Múltiples boquillas", "Presión ajustable", "Fácil de usar"],
                 "category": "Salud",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 9
             },
             {
+                "id": "27",
                 "title": "Clip Nasal Anti-Ronquidos😴",
                 "sku": "CLIPNASAL-029",
                 "price": 99000,
@@ -1049,9 +1548,11 @@
                 "description": "Clip nasal anti-ronquidos que mejora la respiración durante el sueño. Solución cómoda y efectiva para ronquidos leves.",
                 "features": ["Anti-ronquidos", "Mejora respiración", "Cómodo", "Efectivo"],
                 "category": "Salud",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 35
             },
             {
+                "id": "28",
                 "title": "ASIPIRADORA INTELIGENTE",
                 "sku": "ASPIRADORAINTE-29",
                 "price": 279000,
@@ -1059,9 +1560,11 @@
                 "description": "Aspiradora inteligente con navegación automática y aplicación móvil. Limpia tu hogar de forma autónoma y eficiente.",
                 "features": ["Navegación automática", "App móvil", "Limpieza eficiente", "Programable"],
                 "category": "Hogar",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 6
             },
             {
+                "id": "29",
                 "title": "SECADOR DE ROPA PORTATIL",
                 "sku": "SECAPORT-030",
                 "price": 299000,
@@ -1069,9 +1572,11 @@
                 "description": "Secador de ropa portátil, ideal para viajes o espacios pequeños. Secado rápido y eficiente sin ocupar mucho espacio.",
                 "features": ["Portátil", "Secado rápido", "Compacto", "Eficiente"],
                 "category": "Hogar",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 8
             },
             {
+                "id": "30",
                 "title": "🧹¡OFERTA ESPECIAL! Plumero Extensible de 2.80 m con descuento exclusivo 💥",
                 "sku": "PLUMERO-031",
                 "price": 120000,
@@ -1079,9 +1584,11 @@
                 "description": "Llega a todos los rincones sin esfuerzo, Limpieza rápida y efectiva. Reutilizable y fácil de lavar",
                 "features": ["Extensible 2.80m", "Limpieza eficiente", "Reutilizable", "Fácil de lavar"],
                 "category": "Hogar",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 17
             },
             {
+                "id": "31",
                 "title": "Ducha Portátil Recargable Premium™",
                 "sku": "DUCHA-032",
                 "price": 220000,
@@ -1089,9 +1596,11 @@
                 "description": "Ducha portátil recargable premium para camping, playa o emergencias. Presión constante y fácil de transportar.",
                 "features": ["Recargable", "Presión constante", "Portátil", "Premium"],
                 "category": "Outdoor",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 13
             },
             {
+                "id": "32",
                 "title": "Luz Navideña con Panel Solar 20 METROS",
                 "sku": "LUZNAVIDAD-033",
                 "price": 159900,
@@ -1099,7 +1608,8 @@
                 "description": "Luces navideñas con panel solar para decoración ecológica. Automáticas y con múltiples modos de iluminación.",
                 "features": ["Panel solar", "Automáticas", "Múltiples modos", "Ecológicas"],
                 "category": "Hogar",
-                "dateAdded": new Date().toISOString()
+                "dateAdded": new Date().toISOString(),
+                "stock": 21
             }
         ];
 
@@ -1112,9 +1622,12 @@
         let filteredProducts = [];
         let sortBy = 'name';
         let sortOrder = 'asc';
+        let editingProductId = null;
+        let featuresToAdd = [];
+        let featuresToEdit = [];
 
         // ===== Persistencia =====
-        const STORAGE_KEY = 'catalog_products_pro_v1';
+        const STORAGE_KEY = 'catalog_products_pro_v2';
 
         function saveProductsToStorage() {
             try {
@@ -1147,6 +1660,10 @@
             const n = Number(price);
             if (!Number.isFinite(n)) return '0';
             return new Intl.NumberFormat('es-PY').format(n);
+        }
+
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
         }
 
         // ===== Sistema de productos =====
@@ -1207,9 +1724,9 @@
                 
                 const imageUrl = product.image_url || 'https://via.placeholder.com/300x200?text=Imagen+No+Disponible';
                 
-                // Añadir badge de oferta para algunos productos
-                const hasBadge = Math.random() > 0.7;
-                const badgeText = hasBadge ? (Math.random() > 0.5 ? '¡Oferta!' : '¡Nuevo!') : '';
+                // Añadir badge de oferta para productos con stock bajo
+                const hasBadge = product.stock < 10;
+                const badgeText = hasBadge ? '¡Últimas unidades!' : '';
                 
                 productCard.innerHTML = `
                     ${hasBadge ? `<div class="product-badge">${badgeText}</div>` : ''}
@@ -1257,6 +1774,7 @@
             document.getElementById('landing-product-name').textContent = product.title;
             document.getElementById('landing-product-price').textContent = `Gs. ${formatPrice(product.price)}`;
             document.getElementById('landing-product-sku').textContent = `SKU: ${product.sku}`;
+            document.getElementById('stock-count').textContent = product.stock || 5;
             
             const imageUrl = product.image_url || 'https://via.placeholder.com/500x400?text=Imagen+No+Disponible';
             const img = document.getElementById('landing-product-image');
@@ -1360,6 +1878,219 @@
             });
         }
 
+        // ===== Funciones de Administración =====
+        function openAdminPanel() {
+            document.getElementById('admin-panel').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            showAdminSection('products-list');
+            renderAdminProductsList();
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('admin-panel').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            resetAdminForms();
+        }
+
+        function showAdminSection(sectionId) {
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.admin-tab[data-tab="${sectionId}"]`).classList.add('active');
+        }
+
+        function renderAdminProductsList() {
+            const container = document.getElementById('admin-products-list');
+            container.innerHTML = '';
+            
+            products.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                
+                const imageUrl = product.image_url || 'https://via.placeholder.com/60x60?text=Imagen';
+                
+                productItem.innerHTML = `
+                    <img src="${imageUrl}" alt="${product.title}" class="product-item-img">
+                    <div class="product-item-info">
+                        <div class="product-item-title">${product.title}</div>
+                        <div class="product-item-sku">SKU: ${product.sku} | Precio: Gs. ${formatPrice(product.price)}</div>
+                    </div>
+                    <div class="product-item-actions">
+                        <button class="btn btn-edit edit-product" data-id="${product.id}">Editar</button>
+                        <button class="btn btn-delete delete-product" data-id="${product.id}">Eliminar</button>
+                    </div>
+                `;
+                
+                container.appendChild(productItem);
+            });
+            
+            // Agregar event listeners para editar y eliminar
+            document.querySelectorAll('.edit-product').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-id');
+                    editProduct(productId);
+                });
+            });
+            
+            document.querySelectorAll('.delete-product').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-id');
+                    deleteProduct(productId);
+                });
+            });
+        }
+
+        function editProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            editingProductId = productId;
+            featuresToEdit = [...product.features];
+            
+            document.getElementById('edit-product-id').value = product.id;
+            document.getElementById('edit-title').value = product.title;
+            document.getElementById('edit-sku').value = product.sku;
+            document.getElementById('edit-price').value = product.price;
+            document.getElementById('edit-category').value = product.category;
+            document.getElementById('edit-image').value = product.image_url;
+            document.getElementById('edit-description').value = product.description;
+            
+            renderFeaturesList('edit-features-list', featuresToEdit);
+            
+            showAdminSection('product-edit');
+        }
+
+        function deleteProduct(productId) {
+            if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
+                products = products.filter(p => p.id !== productId);
+                saveProductsToStorage();
+                filterAndSortProducts();
+                renderAdminProductsList();
+                alert('Producto eliminado correctamente');
+            }
+        }
+
+        function addNewProduct() {
+            featuresToAdd = [];
+            document.getElementById('add-product-form').reset();
+            document.getElementById('add-features-list').innerHTML = '';
+            showAdminSection('product-add');
+        }
+
+        function saveEditedProduct(e) {
+            e.preventDefault();
+            
+            const productId = document.getElementById('edit-product-id').value;
+            const productIndex = products.findIndex(p => p.id === productId);
+            
+            if (productIndex === -1) return;
+            
+            products[productIndex] = {
+                ...products[productIndex],
+                title: document.getElementById('edit-title').value,
+                sku: document.getElementById('edit-sku').value,
+                price: parseInt(document.getElementById('edit-price').value),
+                category: document.getElementById('edit-category').value,
+                image_url: document.getElementById('edit-image').value,
+                description: document.getElementById('edit-description').value,
+                features: [...featuresToEdit]
+            };
+            
+            saveProductsToStorage();
+            filterAndSortProducts();
+            renderAdminProductsList();
+            showAdminSection('products-list');
+            alert('Producto actualizado correctamente');
+        }
+
+        function saveNewProduct(e) {
+            e.preventDefault();
+            
+            const newProduct = {
+                id: generateId(),
+                title: document.getElementById('add-title').value,
+                sku: document.getElementById('add-sku').value,
+                price: parseInt(document.getElementById('add-price').value),
+                category: document.getElementById('add-category').value,
+                image_url: document.getElementById('add-image').value,
+                description: document.getElementById('add-description').value,
+                features: [...featuresToAdd],
+                dateAdded: new Date().toISOString(),
+                stock: 10
+            };
+            
+            products.push(newProduct);
+            saveProductsToStorage();
+            filterAndSortProducts();
+            renderAdminProductsList();
+            showAdminSection('products-list');
+            alert('Producto agregado correctamente');
+        }
+
+        function addFeatureToList(listType) {
+            const inputId = listType === 'edit' ? 'new-feature' : 'add-new-feature';
+            const listId = listType === 'edit' ? 'edit-features-list' : 'add-features-list';
+            const featureArray = listType === 'edit' ? featuresToEdit : featuresToAdd;
+            
+            const input = document.getElementById(inputId);
+            const feature = input.value.trim();
+            
+            if (feature) {
+                featureArray.push(feature);
+                renderFeaturesList(listId, featureArray);
+                input.value = '';
+            }
+        }
+
+        function removeFeatureFromList(listType, index) {
+            if (listType === 'edit') {
+                featuresToEdit.splice(index, 1);
+                renderFeaturesList('edit-features-list', featuresToEdit);
+            } else {
+                featuresToAdd.splice(index, 1);
+                renderFeaturesList('add-features-list', featuresToAdd);
+            }
+        }
+
+        function renderFeaturesList(listId, featuresArray) {
+            const list = document.getElementById(listId);
+            list.innerHTML = '';
+            
+            featuresArray.forEach((feature, index) => {
+                const featureItem = document.createElement('div');
+                featureItem.className = 'feature-item';
+                featureItem.innerHTML = `
+                    <span>${feature}</span>
+                    <button type="button" class="feature-remove" data-index="${index}">&times;</button>
+                `;
+                list.appendChild(featureItem);
+            });
+            
+            // Agregar event listeners para eliminar características
+            document.querySelectorAll(`#${listId} .feature-remove`).forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    const listType = listId.includes('edit') ? 'edit' : 'add';
+                    removeFeatureFromList(listType, index);
+                });
+            });
+        }
+
+        function resetAdminForms() {
+            document.getElementById('edit-product-form').reset();
+            document.getElementById('add-product-form').reset();
+            document.getElementById('edit-features-list').innerHTML = '';
+            document.getElementById('add-features-list').innerHTML = '';
+            featuresToAdd = [];
+            featuresToEdit = [];
+            editingProductId = null;
+        }
+
         // ===== Scroll to top =====
         function initScrollTop() {
             const scrollBtn = document.getElementById('scroll-top');
@@ -1382,9 +2113,11 @@
 
         // ===== Init =====
         document.addEventListener('DOMContentLoaded', function(){
-            // Cargar productos - SIEMPRE usar los productos por defecto
-            products = [...DEFAULT_PRODUCTS];
-            saveProductsToStorage();
+            // Cargar productos
+            if (!loadProductsFromStorage()) {
+                products = [...DEFAULT_PRODUCTS];
+                saveProductsToStorage();
+            }
 
             filteredProducts = [...products];
             generateCatalog();
@@ -1436,10 +2169,42 @@
                 filterAndSortProducts();
             });
             
+            // Administración
+            document.getElementById('admin-btn').addEventListener('click', openAdminPanel);
+            document.getElementById('admin-close').addEventListener('click', closeAdminPanel);
+            
+            // Tabs de administración
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    showAdminSection(tabId);
+                });
+            });
+            
+            // Botones de administración
+            document.getElementById('add-product-btn').addEventListener('click', addNewProduct);
+            document.getElementById('cancel-edit').addEventListener('click', function() {
+                showAdminSection('products-list');
+            });
+            document.getElementById('cancel-add').addEventListener('click', function() {
+                showAdminSection('products-list');
+            });
+            
+            // Formularios de administración
+            document.getElementById('edit-product-form').addEventListener('submit', saveEditedProduct);
+            document.getElementById('add-product-form').addEventListener('submit', saveNewProduct);
+            
+            // Características
+            document.getElementById('add-feature').addEventListener('click', function() {
+                addFeatureToList('edit');
+            });
+            document.getElementById('add-new-feature-btn').addEventListener('click', function() {
+                addFeatureToList('add');
+            });
+            
             // Inicializar scroll to top
             initScrollTop();
         });
     </script>
 </body>
 </html>
-
