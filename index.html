@@ -6,6 +6,7 @@
     <title>Catálogo de Productos Premium</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* TODOS LOS ESTILOS EXISTENTES SE MANTIENEN IGUAL */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         :root { 
             --primary:#25D366; --primary-dark:#128C7E; --secondary:#FF6B6B; --accent:#FFD166; 
@@ -955,9 +956,86 @@
         .product-card:hover::before {
             transform: scaleX(1);
         }
+
+        /* Estilos para la sección de Meta Pixel */
+        .pixel-config {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+        .pixel-status {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .pixel-active {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+        .pixel-inactive {
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+            border: 1px solid #dc3545;
+        }
+        
+        /* PIN Modal */
+        .pin-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+        .pin-content {
+            background: white;
+            border-radius: 16px;
+            max-width: 400px;
+            width: 90%;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .pin-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        .pin-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+        .pin-input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        .pin-error {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            display: none;
+        }
     </style>
 </head>
 <body>
+    <!-- Meta Pixel Code (se actualizará dinámicamente) -->
+    <script id="meta-pixel-script">
+        // El código de Meta Pixel se cargará aquí dinámicamente
+    </script>
+    <!-- End Meta Pixel Code -->
+
     <header>
         <h1>Catálogo de Productos Premium</h1>
         <p class="subtitle">Los mejores productos al mejor precio - Consulta por WhatsApp</p>
@@ -1137,6 +1215,7 @@
                 <button class="admin-tab active" data-tab="products-list">Lista de Productos</button>
                 <button class="admin-tab" data-tab="product-edit">Editar Producto</button>
                 <button class="admin-tab" data-tab="product-add">Agregar Producto</button>
+                <button class="admin-tab" data-tab="pixel-config">Meta Pixel</button>
             </div>
             
             <div class="admin-section active" id="products-list">
@@ -1234,6 +1313,34 @@
                     </div>
                 </form>
             </div>
+            
+            <!-- Nueva sección para Meta Pixel -->
+            <div class="admin-section" id="pixel-config">
+                <h3>Configuración de Meta Pixel</h3>
+                <div class="pixel-config">
+                    <div class="form-group">
+                        <label for="pixel-code">Código de Meta Pixel</label>
+                        <textarea id="pixel-code" class="form-control" rows="10" placeholder="Pegue aquí el código completo de Meta Pixel"></textarea>
+                        <small>Pegue el código completo proporcionado por Meta Business Suite</small>
+                    </div>
+                    <button class="btn btn-save" id="save-pixel">Guardar Pixel</button>
+                    
+                    <div id="pixel-status" class="pixel-status pixel-inactive">
+                        Meta Pixel no configurado
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para PIN de acceso -->
+    <div class="pin-modal" id="pin-modal">
+        <div class="pin-content">
+            <h3 class="pin-title">Acceso Administrativo</h3>
+            <p>Ingrese el PIN para acceder al panel de administración</p>
+            <input type="password" class="pin-input" id="pin-input" placeholder="Ingrese el PIN" maxlength="4">
+            <div class="pin-error" id="pin-error">PIN incorrecto. Intente nuevamente.</div>
+            <button class="btn btn-primary" id="verify-pin">Acceder</button>
         </div>
     </div>
 
@@ -1638,6 +1745,7 @@
 
         // ===== Config =====
         const whatsappNumber = "595993637616";
+        const ADMIN_PIN = "9662";
 
         // ===== Estado =====
         let products = [];
@@ -1651,6 +1759,7 @@
 
         // ===== Persistencia =====
         const STORAGE_KEY = 'catalog_products_pro_v2';
+        const PIXEL_STORAGE_KEY = 'meta_pixel_code';
 
         function saveProductsToStorage() {
             try {
@@ -1676,6 +1785,49 @@
                 console.warn('No se pudo leer Storage:', e);
             }
             return false;
+        }
+
+        // ===== Meta Pixel Functions =====
+        function savePixelToStorage(pixelCode) {
+            try {
+                localStorage.setItem(PIXEL_STORAGE_KEY, pixelCode);
+                return true;
+            } catch(e){
+                console.warn('No se pudo guardar el Pixel en localStorage:', e);
+                return false;
+            }
+        }
+
+        function loadPixelFromStorage() {
+            try {
+                const pixelCode = localStorage.getItem(PIXEL_STORAGE_KEY);
+                if (pixelCode) {
+                    document.getElementById('pixel-code').value = pixelCode;
+                    updatePixelScript(pixelCode);
+                    updatePixelStatus(true);
+                    return true;
+                }
+            } catch(e){
+                console.warn('No se pudo leer el Pixel de Storage:', e);
+            }
+            updatePixelStatus(false);
+            return false;
+        }
+
+        function updatePixelScript(pixelCode) {
+            const pixelScript = document.getElementById('meta-pixel-script');
+            pixelScript.innerHTML = pixelCode;
+        }
+
+        function updatePixelStatus(isActive) {
+            const statusElement = document.getElementById('pixel-status');
+            if (isActive) {
+                statusElement.textContent = 'Meta Pixel configurado correctamente';
+                statusElement.className = 'pixel-status pixel-active';
+            } else {
+                statusElement.textContent = 'Meta Pixel no configurado';
+                statusElement.className = 'pixel-status pixel-inactive';
+            }
         }
 
         // ===== Utils =====
@@ -1924,10 +2076,25 @@
 
         // ===== Funciones de Administración =====
         function openAdminPanel() {
-            document.getElementById('admin-panel').style.display = 'block';
-            document.body.style.overflow = 'hidden';
-            showAdminSection('products-list');
-            renderAdminProductsList();
+            document.getElementById('pin-modal').style.display = 'flex';
+        }
+
+        function verifyPin() {
+            const pinInput = document.getElementById('pin-input');
+            const pinError = document.getElementById('pin-error');
+            
+            if (pinInput.value === ADMIN_PIN) {
+                document.getElementById('pin-modal').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+                document.body.style.overflow = 'hidden';
+                showAdminSection('products-list');
+                renderAdminProductsList();
+                pinInput.value = '';
+                pinError.style.display = 'none';
+            } else {
+                pinError.style.display = 'block';
+                pinInput.value = '';
+            }
         }
 
         function closeAdminPanel() {
@@ -2169,6 +2336,9 @@
                     saveProductsToStorage();
                 }
 
+                // Cargar Meta Pixel
+                loadPixelFromStorage();
+
                 filteredProducts = [...products];
                 generateCatalog();
 
@@ -2227,6 +2397,14 @@
             document.getElementById('admin-btn').addEventListener('click', openAdminPanel);
             document.getElementById('admin-close').addEventListener('click', closeAdminPanel);
             
+            // PIN Modal
+            document.getElementById('verify-pin').addEventListener('click', verifyPin);
+            document.getElementById('pin-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    verifyPin();
+                }
+            });
+            
             // Tabs de administración
             document.querySelectorAll('.admin-tab').forEach(tab => {
                 tab.addEventListener('click', function() {
@@ -2254,6 +2432,22 @@
             });
             document.getElementById('add-new-feature-btn').addEventListener('click', function() {
                 addFeatureToList('add');
+            });
+            
+            // Meta Pixel
+            document.getElementById('save-pixel').addEventListener('click', function() {
+                const pixelCode = document.getElementById('pixel-code').value.trim();
+                if (pixelCode) {
+                    if (savePixelToStorage(pixelCode)) {
+                        updatePixelScript(pixelCode);
+                        updatePixelStatus(true);
+                        alert('Meta Pixel guardado correctamente');
+                    } else {
+                        alert('Error al guardar el Meta Pixel');
+                    }
+                } else {
+                    alert('Por favor, ingrese el código de Meta Pixel');
+                }
             });
             
             // Inicializar scroll to top
