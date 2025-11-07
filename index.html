@@ -1036,6 +1036,53 @@
         .btn-warning:hover {
             background: #e0a800;
         }
+        
+        /* Nuevos estilos para exportación/importación */
+        .data-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+        .btn-info:hover {
+            background: #138496;
+        }
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        .data-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+        .data-textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+        .data-textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        .data-help {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
     </style>
 </head>
 <body>
@@ -1224,6 +1271,7 @@
                 <button class="admin-tab active" data-tab="products-list">Lista de Productos</button>
                 <button class="admin-tab" data-tab="product-edit">Editar Producto</button>
                 <button class="admin-tab" data-tab="product-add">Agregar Producto</button>
+                <button class="admin-tab" data-tab="data-management">Gestión de Datos</button>
                 <button class="admin-tab" data-tab="pixel-config">Meta Pixel</button>
             </div>
             
@@ -1324,7 +1372,52 @@
                 </form>
             </div>
             
-            <!-- Nueva sección para Meta Pixel -->
+            <!-- Nueva sección para Gestión de Datos -->
+            <div class="admin-section" id="data-management">
+                <h3>Gestión de Datos</h3>
+                <div class="data-actions">
+                    <button class="btn btn-info" id="export-data">
+                        <i class="fas fa-download"></i> Exportar Datos
+                    </button>
+                    <button class="btn btn-warning" id="import-data">
+                        <i class="fas fa-upload"></i> Importar Datos
+                    </button>
+                    <button class="btn btn-danger" id="reset-data">
+                        <i class="fas fa-trash"></i> Restablecer Datos
+                    </button>
+                </div>
+                
+                <div class="data-section">
+                    <h4>Exportar Datos</h4>
+                    <p>Descarga un archivo con todos tus productos para respaldo o transferencia a otro navegador.</p>
+                    <button class="btn btn-info" id="download-data">
+                        <i class="fas fa-file-download"></i> Descargar Archivo JSON
+                    </button>
+                </div>
+                
+                <div class="data-section">
+                    <h4>Importar Datos</h4>
+                    <p>Pega aquí los datos exportados para cargarlos en este navegador.</p>
+                    <textarea id="import-data-text" class="data-textarea" placeholder="Pega aquí los datos JSON exportados..."></textarea>
+                    <div class="data-help">
+                        Los datos importados reemplazarán todos los productos actuales. Haz una copia de seguridad primero si es necesario.
+                    </div>
+                    <button class="btn btn-save" id="confirm-import">
+                        <i class="fas fa-check"></i> Confirmar Importación
+                    </button>
+                </div>
+                
+                <div class="data-section">
+                    <h4>Estado del Almacenamiento</h4>
+                    <div id="storage-status">
+                        <p><strong>Productos cargados:</strong> <span id="products-count">0</span></p>
+                        <p><strong>localStorage:</strong> <span id="localstorage-status">No disponible</span></p>
+                        <p><strong>sessionStorage:</strong> <span id="sessionstorage-status">No disponible</span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sección para Meta Pixel -->
             <div class="admin-section" id="pixel-config">
                 <h3>Configuración de Meta Pixel</h3>
                 <div class="pixel-config">
@@ -1786,8 +1879,11 @@
                     return false;
                 }
                 
-                // Guardar con verificación
+                // Guardar en localStorage
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+                
+                // Guardar también en sessionStorage como respaldo
+                sessionStorage.setItem(STORAGE_KEY, JSON.stringify(products));
                 
                 // Verificar que se guardó correctamente
                 const saved = localStorage.getItem(STORAGE_KEY);
@@ -1797,6 +1893,7 @@
                 }
                 
                 console.log('✅ Productos guardados correctamente. Total:', products.length);
+                updateStorageStatus();
                 return true;
             } catch(e) {
                 console.error('Error al guardar en localStorage:', e);
@@ -1804,9 +1901,11 @@
                 try {
                     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(products));
                     console.log('⚠️ Guardado en sessionStorage como respaldo');
+                    updateStorageStatus();
                     return true;
                 } catch (e2) {
                     console.error('También falló sessionStorage:', e2);
+                    updateStorageStatus();
                     return false;
                 }
             }
@@ -1816,17 +1915,20 @@
             try {
                 // Primero intentar localStorage
                 let raw = localStorage.getItem(STORAGE_KEY);
+                let source = 'localStorage';
                 
                 // Si no hay en localStorage, intentar sessionStorage
                 if (!raw) {
                     raw = sessionStorage.getItem(STORAGE_KEY);
+                    source = 'sessionStorage';
                 }
                 
                 if (raw) {
                     const parsed = JSON.parse(raw);
                     if (Array.isArray(parsed) && parsed.length > 0) {
                         products = parsed;
-                        console.log('✅ Productos cargados desde storage. Total:', products.length);
+                        console.log(`✅ Productos cargados desde ${source}. Total:`, products.length);
+                        updateStorageStatus();
                         return true;
                     }
                 }
@@ -1835,7 +1937,31 @@
             }
             
             console.log('ℹ️ No se encontraron productos guardados, usando productos por defecto');
+            updateStorageStatus();
             return false;
+        }
+
+        function updateStorageStatus() {
+            try {
+                document.getElementById('products-count').textContent = products.length;
+                
+                // Verificar localStorage
+                if (typeof(Storage) !== "undefined") {
+                    const localData = localStorage.getItem(STORAGE_KEY);
+                    document.getElementById('localstorage-status').textContent = 
+                        localData ? 'Disponible (' + JSON.parse(localData).length + ' productos)' : 'Vacío';
+                    
+                    // Verificar sessionStorage
+                    const sessionData = sessionStorage.getItem(STORAGE_KEY);
+                    document.getElementById('sessionstorage-status').textContent = 
+                        sessionData ? 'Disponible (' + JSON.parse(sessionData).length + ' productos)' : 'Vacío';
+                } else {
+                    document.getElementById('localstorage-status').textContent = 'No disponible';
+                    document.getElementById('sessionstorage-status').textContent = 'No disponible';
+                }
+            } catch(e) {
+                console.error('Error al actualizar estado del storage:', e);
+            }
         }
 
         function debugStorage() {
@@ -1856,6 +1982,82 @@
                 console.error('Error al leer localStorage:', e);
             }
             console.log('=====================');
+            
+            // Actualizar estado en la interfaz
+            updateStorageStatus();
+        }
+
+        // ===== Funciones de Exportación/Importación =====
+        function exportData() {
+            const data = {
+                products: products,
+                exportDate: new Date().toISOString(),
+                version: '1.0'
+            };
+            
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `catalogo-productos-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            alert('✅ Datos exportados correctamente');
+        }
+
+        function importData() {
+            const importText = document.getElementById('import-data-text').value.trim();
+            
+            if (!importText) {
+                alert('Por favor, pega los datos JSON en el área de texto');
+                return;
+            }
+            
+            try {
+                const importedData = JSON.parse(importText);
+                
+                if (!importedData.products || !Array.isArray(importedData.products)) {
+                    alert('El formato de datos no es válido. Debe contener un array de productos.');
+                    return;
+                }
+                
+                if (confirm(`¿Estás seguro de que quieres importar ${importedData.products.length} productos? Esto reemplazará todos los productos actuales.`)) {
+                    products = importedData.products;
+                    
+                    if (saveProductsToStorage()) {
+                        filterAndSortProducts();
+                        renderAdminProductsList();
+                        updateStorageStatus();
+                        document.getElementById('import-data-text').value = '';
+                        alert(`✅ Se importaron ${products.length} productos correctamente`);
+                    } else {
+                        alert('❌ Error al guardar los productos importados');
+                    }
+                }
+            } catch(e) {
+                alert('Error al procesar los datos: ' + e.message);
+                console.error('Error en importación:', e);
+            }
+        }
+
+        function resetData() {
+            if (confirm('¿Estás seguro de que quieres restablecer todos los datos a los productos por defecto? Se perderán todos los cambios.')) {
+                products = [...DEFAULT_PRODUCTS];
+                
+                if (saveProductsToStorage()) {
+                    filterAndSortProducts();
+                    renderAdminProductsList();
+                    updateStorageStatus();
+                    alert('✅ Datos restablecidos correctamente');
+                } else {
+                    alert('❌ Error al guardar los datos restablecidos');
+                }
+            }
         }
 
         // ===== Meta Pixel Functions =====
@@ -2160,6 +2362,7 @@
                 document.body.style.overflow = 'hidden';
                 showAdminSection('products-list');
                 renderAdminProductsList();
+                updateStorageStatus();
                 pinInput.value = '';
                 pinError.style.display = 'none';
             } else {
@@ -2254,6 +2457,7 @@
                 if (saveProductsToStorage()) {
                     filterAndSortProducts();
                     renderAdminProductsList();
+                    updateStorageStatus();
                     alert('✅ Producto eliminado correctamente');
                 } else {
                     alert('❌ Error al guardar los cambios');
@@ -2294,6 +2498,7 @@
             if (saveProductsToStorage()) {
                 filterAndSortProducts();
                 renderAdminProductsList();
+                updateStorageStatus();
                 showAdminSection('products-list');
                 alert('✅ Producto actualizado correctamente');
             } else {
@@ -2323,6 +2528,7 @@
             if (saveProductsToStorage()) {
                 filterAndSortProducts();
                 renderAdminProductsList();
+                updateStorageStatus();
                 showAdminSection('products-list');
                 alert('✅ Producto agregado correctamente');
             } else {
@@ -2520,6 +2726,13 @@
             document.getElementById('add-new-feature-btn').addEventListener('click', function() {
                 addFeatureToList('add');
             });
+            
+            // Gestión de datos
+            document.getElementById('export-data').addEventListener('click', exportData);
+            document.getElementById('import-data').addEventListener('click', importData);
+            document.getElementById('reset-data').addEventListener('click', resetData);
+            document.getElementById('download-data').addEventListener('click', exportData);
+            document.getElementById('confirm-import').addEventListener('click', importData);
             
             // Meta Pixel
             document.getElementById('save-pixel').addEventListener('click', function() {
