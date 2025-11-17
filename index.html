@@ -1217,6 +1217,13 @@
                                 <option value="mas">Más de 10 unidades</option>
                             </select>
                         </div>
+                        <!-- NUEVO: Selector de calce para plantillas ortopédicas -->
+                        <div class="form-group" id="size-container" style="display: none;">
+                            <label for="customer-size">Calce</label>
+                            <select id="customer-size" class="form-control" required>
+                                <option value="">Selecciona tu calce</option>
+                            </select>
+                        </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="customer-address">Dirección de envío</label>
@@ -1321,6 +1328,12 @@
                         </div>
                         <div class="features-list" id="edit-features-list"></div>
                     </div>
+                    <!-- NUEVO: Campo para tallas en el panel de administración -->
+                    <div class="form-group">
+                        <label for="edit-sizes">Tallas disponibles (separadas por comas)</label>
+                        <input type="text" id="edit-sizes" class="form-control" placeholder="Ej: 35,36,37,38,39,40,41,42,43,44,45">
+                        <small>Dejar vacío si el producto no tiene tallas</small>
+                    </div>
                     <div class="form-actions">
                         <button type="button" class="btn btn-cancel" id="cancel-edit">Cancelar</button>
                         <button type="submit" class="btn btn-save">Guardar Cambios</button>
@@ -1364,6 +1377,12 @@
                             <button type="button" class="btn btn-edit" id="add-new-feature-btn">Agregar</button>
                         </div>
                         <div class="features-list" id="add-features-list"></div>
+                    </div>
+                    <!-- NUEVO: Campo para tallas en el panel de administración -->
+                    <div class="form-group">
+                        <label for="add-sizes">Tallas disponibles (separadas por comas)</label>
+                        <input type="text" id="add-sizes" class="form-control" placeholder="Ej: 35,36,37,38,39,40,41,42,43,44,45">
+                        <small>Dejar vacío si el producto no tiene tallas</small>
                     </div>
                     <div class="form-actions">
                         <button type="button" class="btn btn-cancel" id="cancel-add">Cancelar</button>
@@ -1518,7 +1537,8 @@
                 "features": ["Tecnología 5D", "Amortiguación avanzada", "Alivia dolores", "Mejora postura"],
                 "category": "Salud",
                 "dateAdded": new Date().toISOString(),
-                "stock": 12
+                "stock": 12,
+                "sizes": ["35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45"] // NUEVO: Calces disponibles
             },
             {
                 "id": "camara-spy-6",
@@ -1686,7 +1706,8 @@
                 "features": ["Amortiguación avanzada", "Soporte arqueado", "Confort diario", "Material de calidad"],
                 "category": "Salud",
                 "dateAdded": new Date().toISOString(),
-                "stock": 18
+                "stock": 18,
+                "sizes": ["35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45"] // NUEVO: Calces disponibles
             },
             {
                 "id": "hidrolavadora-20",
@@ -2306,6 +2327,22 @@
                 featuresEl.appendChild(li); 
             });
 
+            // NUEVO: Mostrar selector de calce si el producto tiene tallas
+            const sizeContainer = document.getElementById('size-container');
+            if (product.sizes && product.sizes.length > 0) {
+                sizeContainer.style.display = 'block';
+                const sizeSelect = document.getElementById('customer-size');
+                sizeSelect.innerHTML = '<option value="">Selecciona tu calce</option>';
+                product.sizes.forEach(size => {
+                    const option = document.createElement('option');
+                    option.value = size;
+                    option.textContent = `Calce ${size}`;
+                    sizeSelect.appendChild(option);
+                });
+            } else {
+                sizeContainer.style.display = 'none';
+            }
+
             updateTotalPrice();
             document.getElementById('landing-page').style.display = 'block';
             document.body.style.overflow = 'hidden';
@@ -2344,6 +2381,10 @@
             const address = document.getElementById('customer-address').value;
             const city = document.getElementById('customer-city').value;
             const message = document.getElementById('customer-message').value;
+            
+            // NUEVO: Obtener la talla seleccionada
+            const size = document.getElementById('customer-size').value;
+            const sizeText = size ? `\n*Calce seleccionado:* ${size}` : '';
 
             let total = 0, quantityText = quantity;
             if (quantity !== 'mas'){ 
@@ -2351,7 +2392,7 @@
                 quantityText = `${quantity} unidad(es)`; 
             }
 
-            const whatsappMessage = `Hola, estoy interesado en comprar el siguiente producto:\n\n*Producto:* ${currentProduct.title}\n*SKU:* ${currentProduct.sku}\n*Precio unitario:* Gs. ${formatPrice(currentProduct.price)}\n*Cantidad:* ${quantityText}\n${quantity !== 'mas' ? `*Total a pagar:* Gs. ${formatPrice(total)}` : ''}\n\n*Mis datos:*\n- *Nombre:* ${name}\n- *Teléfono:* ${phone}\n- *Dirección:* ${address}\n- *Ciudad:* ${city}\n${message ? `- *Mensaje adicional:* ${message}` : ''}\n\nPor favor, contáctenme para proceder con la compra. ¡Gracias!`;
+            const whatsappMessage = `Hola, estoy interesado en comprar el siguiente producto:\n\n*Producto:* ${currentProduct.title}\n*SKU:* ${currentProduct.sku}\n*Precio unitario:* Gs. ${formatPrice(currentProduct.price)}\n*Cantidad:* ${quantityText}${sizeText}\n${quantity !== 'mas' ? `*Total a pagar:* Gs. ${formatPrice(total)}` : ''}\n\n*Mis datos:*\n- *Nombre:* ${name}\n- *Teléfono:* ${phone}\n- *Dirección:* ${address}\n- *Ciudad:* ${city}\n${message ? `- *Mensaje adicional:* ${message}` : ''}\n\nPor favor, contáctenme para proceder con la compra. ¡Gracias!`;
             const encoded = encodeURIComponent(whatsappMessage);
             const link = `https://wa.me/${whatsappNumber}?text=${encoded}`;
             window.open(link, '_blank');
@@ -2457,6 +2498,9 @@
             document.getElementById('edit-image').value = product.image_url;
             document.getElementById('edit-description').value = product.description;
             
+            // NUEVO: Cargar tallas en el formulario de edición
+            document.getElementById('edit-sizes').value = product.sizes ? product.sizes.join(',') : '';
+            
             renderFeaturesList('edit-features-list', featuresToEdit);
             
             showAdminSection('product-edit');
@@ -2481,6 +2525,8 @@
             featuresToAdd = [];
             document.getElementById('add-product-form').reset();
             document.getElementById('add-features-list').innerHTML = '';
+            // NUEVO: Limpiar campo de tallas
+            document.getElementById('add-sizes').value = '';
             showAdminSection('product-add');
         }
 
@@ -2495,6 +2541,10 @@
                 return;
             }
             
+            // NUEVO: Procesar las tallas
+            const sizesInput = document.getElementById('edit-sizes').value.trim();
+            const sizes = sizesInput ? sizesInput.split(',').map(s => s.trim()).filter(s => s) : [];
+            
             products[productIndex] = {
                 ...products[productIndex],
                 title: document.getElementById('edit-title').value,
@@ -2503,7 +2553,8 @@
                 category: document.getElementById('edit-category').value,
                 image_url: document.getElementById('edit-image').value,
                 description: document.getElementById('edit-description').value,
-                features: [...featuresToEdit]
+                features: [...featuresToEdit],
+                sizes: sizes // NUEVO: Guardar tallas
             };
             
             // VERIFICAR EL GUARDADO
@@ -2521,6 +2572,10 @@
         function saveNewProduct(e) {
             e.preventDefault();
             
+            // NUEVO: Procesar las tallas
+            const sizesInput = document.getElementById('add-sizes').value.trim();
+            const sizes = sizesInput ? sizesInput.split(',').map(s => s.trim()).filter(s => s) : [];
+            
             const newProduct = {
                 id: generateId(),
                 title: document.getElementById('add-title').value,
@@ -2530,6 +2585,7 @@
                 image_url: document.getElementById('add-image').value,
                 description: document.getElementById('add-description').value,
                 features: [...featuresToAdd],
+                sizes: sizes, // NUEVO: Guardar tallas
                 dateAdded: new Date().toISOString(),
                 stock: 10
             };
